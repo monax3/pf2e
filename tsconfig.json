@@ -3,6 +3,7 @@
         "target": "ES2022",
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
+        "declaration": true,
         "lib": [
             "ES2023",
             "ESNext.Array",
@@ -18,7 +19,7 @@
         "noEmit": true,
         "strict": true,
         "noFallthroughCasesInSwitch": true,
-        "skipLibCheck": true,
+        "skipLibCheck": false,
         "noImplicitOverride": true,
         "noImplicitReturns": true,
         "noUnusedLocals": true,
@@ -34,7 +35,7 @@
         "removeComments": false,
         "resolveJsonModule": true,
         "useDefineForClassFields": true,
-        "noErrorTruncation": true,
+        "noErrorTruncation": false,
         "paths": {
             "@actor": [
                 "./src/module/actor/index.ts"
@@ -92,7 +93,8 @@
         "./src/**/*",
         "./tests/**/*.ts",
         "./types/foundry/global-external.d.mts",
-        "./vite.config.ts"
+        "./vite.config.ts",
+        "./types/foundry/**/*"
     ],
     "watchOptions": {
         "fallbackPolling": "dynamicpriority",
