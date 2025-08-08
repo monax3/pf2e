@@ -1,7 +1,6 @@
 import type { ActorPF2e, CharacterPF2e } from "@actor";
 import type { CraftingAbility } from "@actor/character/crafting/ability.ts";
 import type { ResourceData } from "@actor/creature/index.ts";
-import type ApplicationV2 from "@client/applications/api/application.d.mts";
 import type { ItemUUID } from "@common/documents/_module.d.mts";
 import type { AbilityItemPF2e, FeatPF2e, PhysicalItemPF2e } from "@item";
 import type { TraitChatData } from "@item/base/data/index.ts";
@@ -20,9 +19,7 @@ interface FormulaPickerConfiguration extends fa.ApplicationConfiguration {
 }
 
 /** Creates a formula picker dialog that resolves with the selected item */
-class FormulaPicker extends SvelteApplicationMixin<
-    AbstractConstructorOf<ApplicationV2> & { DEFAULT_OPTIONS: DeepPartial<FormulaPickerConfiguration> }
->(fa.api.ApplicationV2) {
+class FormulaPicker extends SvelteApplicationMixin(foundry.applications.api.ApplicationV2) {
     static override DEFAULT_OPTIONS = {
         id: "{id}-formula-picker",
         position: {

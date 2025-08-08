@@ -102,7 +102,8 @@ class PickAThingPrompt<TThing extends string | number | object> extends SvelteAp
 }
 
 interface PickAThingPromptConfiguration<TThing extends string | number | object = string | number | object>
-    extends DeepPartial<fa.ApplicationConfiguration> {
+    extends DeepPartial<fa.ApplicationConfiguration>,
+        DeepPartial<fa.ApplicationRenderContext> {
     prompt: string;
     item: ItemPF2e;
     title: string;
