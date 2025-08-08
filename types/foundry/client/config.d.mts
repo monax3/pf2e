@@ -1,5 +1,5 @@
 import { DataSchema, Document, TypeDataModel } from "@common/abstract/_module.mjs";
-import { AudioFilePath, ImageFilePath, RollMode } from "@common/constants.mjs";
+import { AudioFilePath, CompatibilityMode, ImageFilePath, RollMode } from "@common/constants.mjs";
 import { DocumentConstructionContext } from "../common/_types.mjs";
 import { ActiveEffectSource } from "../common/documents/active-effect.mjs";
 import { applications, dice, documents } from "./_module.mjs";
@@ -174,6 +174,12 @@ export default interface Config<
         avclient: boolean;
         mouseInteraction: boolean;
         time: boolean;
+    };
+
+    compatibility: {
+        excludePatterns: RegExp[];
+        includePatterns: RegExp[];
+        mode: CompatibilityMode;
     };
 
     time: {
