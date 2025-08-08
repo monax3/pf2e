@@ -1,18 +1,18 @@
-import {
+import type {
     ApplicationConfiguration,
     ApplicationFormConfiguration,
     ApplicationRenderContext,
     ApplicationTabsConfiguration,
     FormFooterButton,
 } from "@client/applications/_types.mjs";
-import ApplicationV2 from "@client/applications/api/application.mjs";
-import Actor from "@client/documents/actor.mjs";
-import TokenDocument from "@client/documents/token.mjs";
-import { DataSchema } from "@common/abstract/_types.mjs";
-import { PrototypeToken } from "@common/data/_module.mjs";
+import type ApplicationV2 from "@client/applications/api/application.mjs";
+import type Actor from "@client/documents/actor.mjs";
+import type TokenDocument from "@client/documents/token.mjs";
+import type { DataSchema } from "@common/abstract/_types.mjs";
+import type { PrototypeToken } from "@common/data/_module.mjs";
 import HandlebarsApplicationMixin, {
-    HandlebarsRenderOptions,
-    HandlebarsTemplatePart,
+    type HandlebarsRenderOptions,
+    type HandlebarsTemplatePart,
 } from "../../api/handlebars-application.mjs";
 
 /**
