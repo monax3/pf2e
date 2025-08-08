@@ -14,9 +14,10 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import packageJSON from "./package.json" with { type: "json" };
 import { sluggify } from "./src/util/misc.ts";
 import systemJSON from "./static/system.json" with { type: "json" };
+import { declarations } from "./build/fix-declarations.mts";
 
 const CONDITION_SOURCES = ((): ConditionSource[] => {
-    const output = execSync("npm run build:conditions", { encoding: "utf-8" });
+    const output = execSync("pnpm run build:conditions", { encoding: "utf-8" });
     return JSON.parse(output.slice(output.indexOf("[")));
 })();
 const EN_JSON = JSON.parse(fs.readFileSync("./static/lang/en.json", { encoding: "utf-8" }));
@@ -78,6 +79,7 @@ const config = Vite.defineConfig(({ command, mode }): Vite.UserConfig => {
         sveltePlugin({
             preprocess: command === "serve" ? hmrPreprocess : undefined,
         }),
+        declarations(),
     ];
     // Handle minification after build to allow for tree-shaking and whitespace minification
     // "Note the build.minify option does not minify whitespaces when using the 'es' format in lib mode, as it removes
