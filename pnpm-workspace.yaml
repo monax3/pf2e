@@ -1,0 +1,8 @@
+shamefullyHoist: true
+
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - classic-level
+  - esbuild
+  - svelte-preprocess
+  - unrs-resolver
