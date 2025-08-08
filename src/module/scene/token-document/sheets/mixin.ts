@@ -2,7 +2,10 @@ import type { ActorPF2e } from "@actor";
 import { SIZE_LINKABLE_ACTOR_TYPES } from "@actor/values.ts";
 import type { ApplicationRenderContext } from "@client/applications/_module.d.mts";
 import type { DocumentSheetConfiguration, DocumentSheetRenderContext } from "@client/applications/api/_module.d.mts";
-import type { HandlebarsRenderOptions } from "@client/applications/api/handlebars-application.d.mts";
+import type {
+    HandlebarsApplication,
+    HandlebarsRenderOptions,
+} from "@client/applications/api/handlebars-application.d.mts";
 import type { TokenApplicationMixin } from "@client/applications/sheets/_module.d.mts";
 import type { DocumentFlags } from "@common/data/_module.d.mts";
 import type { SettingsMenuOptions } from "@system/settings/menu.ts";
@@ -10,8 +13,48 @@ import { createHTMLElement, ErrorPF2e, htmlQuery } from "@util";
 import type { TokenDocumentPF2e } from "../document.ts";
 import type { PrototypeTokenConfigPF2e } from "./prototype-config.ts";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function TokenConfigMixinPF2e<TBase extends ReturnType<typeof TokenApplicationMixin>>(Base: TBase) {
+export declare abstract class TokenConfigMixin_base {
+    static #SIGHT_INPUT_NAMES: "angle" | "brightness" | "range" | "saturation" | "visionMode";
+
+    static DEFAULT_OPTIONS: DeepPartial<DocumentSheetConfiguration>;
+
+    get linkToActorSize(): boolean;
+
+    /** Get this token's dimensions were they linked to its actor's size */
+    get dimensionsFromActorSize(): number;
+
+    get rulesBasedVision(): boolean;
+
+    /* -------------------------------------------- */
+    /*  Event Handlers                              */
+    /* -------------------------------------------- */
+
+    static #onClickOpenAutomationSettings(this: PrototypeTokenConfigPF2e): Promise<void>;
+
+    /** Disable the range input for token scale and style to indicate as much */
+    static #onClickToggleAutoscale(this: PrototypeTokenConfigPF2e): Promise<void>;
+
+    static #onClickToggleSizeLink(this: PrototypeTokenConfigPF2e): Promise<void>;
+
+    /* -------------------------------------------- */
+    /*  Form Submission                             */
+    /* -------------------------------------------- */
+
+    protected processFormData(data: Record<string, unknown>, form: HTMLFormElement): Record<string, unknown>;
+
+    protected processSubmitData(submitData: Record<string, unknown>): Promise<void>;
+}
+
+export function TokenConfigMixinPF2e<
+    TMixin extends AbstractConstructorOf<fa.api.ApplicationV2 & HandlebarsApplication> &
+        Omit<typeof fa.api.ApplicationV2 & typeof HandlebarsApplication, "prototype">,
+>(
+    Base: TMixin,
+): AbstractMixin<
+    TMixin,
+    TokenConfigMixin_base & HandlebarsApplication,
+    typeof TokenConfigMixin_base & HandlebarsApplication & fa.api.ApplicationV2
+> {
     abstract class TokenConfigMixin extends Base {
         static #SIGHT_INPUT_NAMES = (["angle", "brightness", "range", "saturation", "visionMode"] as const).map(
             (n) => `sight.${n}` as const,
@@ -27,7 +70,7 @@ function TokenConfigMixinPF2e<TBase extends ReturnType<typeof TokenApplicationMi
         };
 
         static override PARTS = (() => {
-            const parts = { ...super.PARTS };
+            const parts = { ...Base.PARTS };
             parts["appearance"].template = "systems/pf2e/templates/scene/token/appearance.hbs";
             return parts;
         })();
@@ -230,7 +273,11 @@ function TokenConfigMixinPF2e<TBase extends ReturnType<typeof TokenApplicationMi
         get token(): TokenDocumentPF2e | PrototypeTokenPF2e;
     }
 
-    return TokenConfigMixin;
+    return TokenConfigMixin as unknown as AbstractMixin<
+        TMixin,
+        TokenConfigMixin_base & HandlebarsApplication,
+        typeof TokenConfigMixin_base & HandlebarsApplication & fa.api.ApplicationV2
+    >;
 }
 
 interface PrototypeTokenPF2e extends foundry.data.PrototypeToken<ActorPF2e> {
@@ -250,5 +297,4 @@ interface TokenConfigContext extends DocumentSheetRenderContext {
     autoscaleTitle: string;
 }
 
-export { TokenConfigMixinPF2e };
 export type { TokenConfigContext };
