@@ -309,10 +309,6 @@ declare global {
             ruleElement: boolean;
         };
         PF2E: typeof PF2ECONFIG;
-        time: {
-            roundTime: number;
-            turnTime: number;
-        };
     }
 
     const CONFIG: ConfigPF2e;
