@@ -1,14 +1,4 @@
-# A system implementation of Pathfinder Second Edition for Foundry VTT
-
-This system uses trademarks and/or copyrights owned by Paizo Inc., which are used with permission granted as part of the partnership agreement between Foundry Gaming LLC and Paizo Inc. This system was created and is maintained by the PF2E For Foundry VTT volunteer development team, and is published for free with the endorsement of Foundry Gaming LLC.
-
-If you would like to undertake a similar project, much of what this system includes is covered under Paizo's Community Use Policy. For more information please visit https://paizo.com/community/communityuse. For more information about Paizo Inc. and Paizo products, please visit https://paizo.com/.
-
-## WIP and Feedback
-
-> 🛠️ Please note that the functionality of this project is not complete and there is plenty of work remaining.
-
-If you have any suggestions or feedback, please contact us on Discord in the #pf2e channel on the Foundry Discord server.
+A fork of [the Pathfinder 2nd Edition system for Foundry VTT](https://github.com/foundryvtt/pf2e) with patches to generate type declarations.
 
 ## Licenses
 
