@@ -2,6 +2,7 @@
 
 export * from "@common/data/_module.mjs";
 export * from "./_types.mjs";
+export * as types from "./_types.mjs";
 export * from "./calendar.mjs";
 export { default as CalendarData } from "./calendar.mjs";
 export { default as ClientDatabaseBackend } from "./client-backend.mjs";
