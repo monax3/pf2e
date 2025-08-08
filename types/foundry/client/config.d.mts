@@ -185,6 +185,12 @@ export default interface Config<
     time: {
         roundTime: number;
         turnTime: number;
+
+        earthCalendarClass: typeof foundry.data.CalendarData<foundry.data.types.TimeComponents>;
+        earthCalendarConfig: foundry.data.types.CalendarConfig;
+        worldCalendarClass: typeof foundry.data.CalendarData<foundry.data.types.TimeComponents>;
+        worldCalendarConfig: foundry.data.types.CalendarConfig;
+        formatters: Record<string, foundry.data.types.TimeFormatter>;
     };
 
     compendium: {
