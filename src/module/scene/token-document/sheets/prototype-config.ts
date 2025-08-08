@@ -11,7 +11,7 @@ class PrototypeTokenConfigPF2e extends TokenConfigMixinPF2e(fa.sheets.PrototypeT
         return this.processFormData(data, form);
     }
 
-    protected override async _processChanges(submitData: Record<string, unknown>): Promise<void> {
+    override async _processChanges(submitData: Record<string, unknown>): Promise<void> {
         this.processSubmitData(submitData);
         return super._processChanges(submitData);
     }
