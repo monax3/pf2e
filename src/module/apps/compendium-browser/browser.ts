@@ -19,7 +19,7 @@ class CompendiumBrowser extends SvelteApplicationMixin(fa.api.ApplicationV2) {
 
     declare protected $state: CompendiumBrowserState;
 
-    root = App;
+    override root = App;
 
     activeTab: BrowserTab;
     dataTabsList = ["action", "bestiary", "campaignFeature", "equipment", "feat", "hazard", "spell"] as const;
