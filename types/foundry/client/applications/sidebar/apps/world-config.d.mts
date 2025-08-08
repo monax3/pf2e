@@ -43,5 +43,5 @@ export default class WorldConfig extends HandlebarsApplicationMixin(
 
     protected override _onChangeForm(formConfig: ApplicationFormConfiguration, event: Event): void;
 
-    protected override _prepareContext(options: ApplicationRenderContext): Promise<ApplicationRenderContext>;
+    protected override _prepareContext(options: HandlebarsRenderOptions): Promise<ApplicationRenderContext>;
 }
