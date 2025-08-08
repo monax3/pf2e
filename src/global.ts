@@ -369,3 +369,5 @@ declare global {
     const ROLL_PARSER: string;
     const UUID_REDIRECTS: Record<CompendiumUUID, CompendiumUUID>;
 }
+
+export type { ClientSettingsPF2e, GamePF2e };
