@@ -7,19 +7,34 @@ interface SvelteApplicationRenderContext extends fa.ApplicationRenderContext {
     foundryApp: SvelteApplication;
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function SvelteApplicationMixin<
-    TBase extends AbstractConstructorOf<fa.api.ApplicationV2> & {
-        DEFAULT_OPTIONS: DeepPartial<fa.ApplicationConfiguration>;
-    },
->(Base: TBase) {
-    abstract class SvelteApplication extends Base {
-        static override DEFAULT_OPTIONS: DeepPartial<fa.ApplicationConfiguration> = {
+export declare abstract class SvelteApplicationMixin_base {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    protected abstract root: svelte.Component<any>;
+
+    /** State data tracked by the root component */
+    protected $state: object;
+
+    protected _renderHTML(context: SvelteApplicationRenderContext): Promise<SvelteApplicationRenderContext>;
+
+    protected _replaceHTML(
+        result: SvelteApplicationRenderContext,
+        content: HTMLElement,
+        options: fa.ApplicationRenderOptions,
+    ): void;
+
+    protected _onClose(options: fa.ApplicationClosingOptions): void;
+}
+
+export function SvelteApplicationMixin<T extends AbstractConstructorOf<fa.api.ApplicationV2>>(
+    Base: T,
+): AbstractMixin<T, SvelteApplicationMixin_base, typeof SvelteApplicationMixin_base & typeof fa.api.ApplicationV2> {
+    abstract class SvelteApplicationMixin extends Base {
+        static DEFAULT_OPTIONS: DeepPartial<fa.ApplicationConfiguration> = {
             classes: ["pf2e"],
         };
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        protected abstract root: svelte.Component<any>;
+        declare protected root: svelte.Component<any>;
 
         /** State data tracked by the root component */
         protected $state: object = $state({});
@@ -40,7 +55,10 @@ function SvelteApplicationMixin<
         ): void {
             Object.assign(this.$state, result.state);
             if (options.isFirstRender) {
-                this.#mount = svelte.mount(this.root, { target: content, props: { ...result, state: this.$state } });
+                this.#mount = svelte.mount(this.root, {
+                    target: content,
+                    props: { ...result, state: this.$state },
+                });
             }
         }
 
@@ -50,9 +68,13 @@ function SvelteApplicationMixin<
         }
     }
 
-    return SvelteApplication;
+    return SvelteApplicationMixin as unknown as AbstractMixin<
+        T,
+        SvelteApplicationMixin_base,
+        typeof SvelteApplicationMixin_base & typeof fa.api.ApplicationV2
+    >;
 }
 
 type SvelteApplication = InstanceType<ReturnType<typeof SvelteApplicationMixin>>;
 
-export { SvelteApplicationMixin, type SvelteApplicationRenderContext };
+export type { SvelteApplicationRenderContext };

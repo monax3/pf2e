@@ -6,15 +6,15 @@ import type ApplicationV2 from "./application.d.mts";
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types @typescript-eslint/no-explicit-any
 export default function HandlebarsApplicationMixin<TBase extends AbstractConstructorOf<ApplicationV2<any>>>(
     BaseApplication: TBase,
-): ConstructorOf<HandlebarsApplication> & HandlebarsApplicationStatic & TBase;
+): AbstractMixin<TBase, HandlebarsApplication, typeof HandlebarsApplication & typeof ApplicationV2>;
 
-export class HandlebarsApplication extends ApplicationV2 {
+export abstract class HandlebarsApplication {
     static PARTS: Record<string, HandlebarsTemplatePart>;
 
     /** A record of all rendered template parts. */
     get parts(): Record<string, HTMLElement>;
 
-    protected override _configureRenderOptions(options: HandlebarsRenderOptions): void;
+    protected _configureRenderOptions(options: HandlebarsRenderOptions): void;
 
     /** Allow subclasses to dynamically configure render parts. */
     protected _configureRenderParts(options: HandlebarsRenderOptions): Record<string, HandlebarsTemplatePart>;
@@ -25,7 +25,7 @@ export class HandlebarsApplication extends ApplicationV2 {
      * @param options Options which configure application rendering behavior
      * @returns A single rendered HTMLElement for each requested part
      */
-    protected override _renderHTML(
+    protected _renderHTML(
         context: object,
         options: HandlebarsRenderOptions,
     ): Promise<Record<string, HTMLElement>>;
@@ -53,7 +53,7 @@ export class HandlebarsApplication extends ApplicationV2 {
      * @param content The content element into which the rendered result must be inserted
      * @param options     Options which configure application rendering behavior
      */
-    protected override _replaceHTML(
+    protected _replaceHTML(
         result: Record<string, HTMLElement>,
         content: HTMLElement,
         options: HandlebarsRenderOptions,
@@ -93,10 +93,6 @@ export class HandlebarsApplication extends ApplicationV2 {
      * @param options       Rendering options passed to the render method
      */
     protected _attachPartListeners(partId: string, htmlElement: HTMLElement, options: HandlebarsRenderOptions): void;
-}
-
-declare interface HandlebarsApplicationStatic {
-    PARTS: Record<string, HandlebarsTemplatePart>;
 }
 
 export interface HandlebarsTemplatePart {
