@@ -49,6 +49,9 @@ declare global {
 
     /** A JSON-compatible value, plus `undefined` */
     type JSONValue = string | number | boolean | object | null | undefined;
+
+    type Mixin<T extends ConstructorOf<any>, TMixin, TClass> = T & ConstructorOf<TMixin> & Omit<TClass, 'prototype'>;
+    type AbstractMixin<T extends AbstractConstructorOf<any>, TMixin, TClass> = T & AbstractConstructorOf<TMixin> & Omit<TClass, 'prototype'>;
 }
 
 type ExtractObjects<T> = T extends infer U ? (U extends object ? U : never) : never;

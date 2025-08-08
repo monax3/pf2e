@@ -1,6 +1,85 @@
 import type { TileOcclusionMode } from "@common/constants.mjs";
 import Token from "../placeables/token.mjs";
-import PrimaryCanvasObjectMixin from "./primary-canvas-object.mjs";
+import PrimaryCanvasObjectMixin, { PrimaryCanvasObjectMixin_base } from "./primary-canvas-object.mjs";
+
+declare abstract class PrimaryOccludableObjecMixin_base  extends PrimaryCanvasObjectMixin_base {
+    /** Is this occludable object hidden for Gamemaster visibility only? */
+    declare hidden: boolean;
+
+    /** A flag which tracks whether the primary canvas object is currently in an occluded state. */
+    declare occluded: boolean;
+
+    /** The occlusion mode of this occludable object. */
+    declare occlusionMode: TileOcclusionMode;
+
+    /** The unoccluded alpha of this object. */
+    declare unoccludedAlpha: number;
+
+    /** The occlusion alpha of this object. */
+    declare occludedAlpha: number;
+
+    /**
+     * Fade this object on hover?
+     * @defaultValue true
+     */
+    get hoverFade(): boolean;
+
+    set hoverFade(value: boolean);
+
+    /**
+     * The amount of rendered FADE, RADIAL, and VISION occlusion.
+     * @internal
+     */
+    declare _occlusionState: OcclusionState;
+
+    /** The state of hover-fading. */
+    declare _hoverFadeState: HoverFadeState;
+
+    /* -------------------------------------------- */
+    /*  Properties                                  */
+    /* -------------------------------------------- */
+
+    /** Get the blocking option bitmask value. */
+    get _restrictionState(): number;
+
+    /** Is this object blocking light? */
+    get restrictsLight(): boolean;
+
+    set restrictsLight(enabled: boolean);
+
+    /** Is this object blocking weather? */
+    get restrictsWeather(): boolean;
+
+    set restrictsWeather(enabled: boolean);
+
+    /** Is this occludable object... occludable? */
+    get isOccludable(): boolean;
+
+    /**
+     * Debounce assignment of the PCO occluded state to avoid cases like animated token movement which can rapidly
+     * change PCO appearance.
+     * Uses a 50ms debounce threshold.
+     * Objects which are in the hovered state remain occluded until their hovered state ends.
+     * @type {function(occluded: boolean): void}
+     */
+    declare debounceSetOcclusion: () => void;
+
+    override updateCanvasTransform(): void;
+
+    /* -------------------------------------------- */
+    /*  Depth Rendering                             */
+    /* -------------------------------------------- */
+
+    /**
+     * Test whether a specific Token occludes this PCO.
+     * Occlusion is tested against 9 points, the center, the four corners-, and the four cardinal directions
+     * @param token     The Token to test
+     * @param [options] Additional options that affect testing
+     * @param [options.corners=true] Test corners of the hit-box in addition to the token center?
+     * @returns Is the Token occluded by the PCO?
+     */
+    testOcclusion(token: Token, options?: { corner?: boolean }): boolean;
+}
 
 /**
  * A mixin which decorates a DisplayObject with depth and/or occlusion properties.
@@ -13,7 +92,7 @@ import PrimaryCanvasObjectMixin from "./primary-canvas-object.mjs";
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function PrimaryOccludableObjectMixin<TBase extends ConstructorOf<PIXI.DisplayObject>>(
     DisplayObject: TBase,
-) {
+): AbstractMixin<TBase, PrimaryOccludableObjecMixin_base, typeof PrimaryOccludableObjecMixin_base & typeof PIXI.DisplayObject> {
     abstract class PrimaryOccludableObject extends PrimaryCanvasObjectMixin(DisplayObject) {
         /** Is this occludable object hidden for Gamemaster visibility only? */
         declare hidden: boolean;
