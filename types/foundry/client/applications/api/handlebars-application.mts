@@ -1,16 +1,111 @@
 import type { ApplicationFormConfiguration, ApplicationRenderContext, ApplicationRenderOptions } from "../_types.mjs";
 import type ApplicationV2 from "./application.mjs";
 
-/** Augment an Application class with [Handlebars](https://handlebarsjs.com) template rendering behavior. */
-/* eslint-disable @typescript-eslint/no-unused-expressions, no-unused-expressions */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export default function HandlebarsApplicationMixin<TBase extends AbstractConstructorOf<ApplicationV2>>(
-    BaseApplication: TBase,
-) {
-    abstract class HandlebarsApplication extends BaseApplication {
-        declare static PARTS: Record<string, HandlebarsTemplatePart>;
+export declare abstract class HandlebarsApplicationMixin_base {
+        static PARTS: Record<string, HandlebarsTemplatePart>;
 
         /** A record of all rendered template parts. */
+        get parts(): Record<string, HTMLElement>;
+
+        protected _configureRenderOptions(options: HandlebarsRenderOptions): void;
+
+        /** Allow subclasses to dynamically configure render parts. */
+        protected _configureRenderParts(options: HandlebarsRenderOptions): Record<string, HandlebarsTemplatePart>;
+
+        /**
+         * Render each configured application part using Handlebars templates.
+         * @param context        Context data for the render operation
+         * @param options        Options which configure application rendering behavior
+         * @returns A single rendered HTMLElement for each requested part
+         */
+        protected _renderHTML(
+            context: object,
+            options: HandlebarsRenderOptions,
+        ): Promise<Record<string, HTMLElement>>;
+
+        /**
+         * Prepare context that is specific to only a single rendered part.
+         *
+         * It is recommended to augment or mutate the shared context so that downstream methods like _onRender have
+         * visibility into the data that was used for rendering. It is acceptable to return a different context object
+         * rather than mutating the shared context at the expense of this transparency.
+         *
+         * @param partId       The part being rendered
+         * @param context      Shared context provided by _prepareContext
+         * @returns Context data for a specific part
+         */
+        protected _preparePartContext(
+            partId: string,
+            context: ApplicationRenderContext,
+            options: HandlebarsRenderOptions,
+        ): Promise<ApplicationRenderContext>;
+
+        /**
+         * Replace the HTML of the application with the result provided by Handlebars rendering.
+         * @param result  The result from Handlebars template rendering
+         * @param content The content element into which the rendered result must be inserted
+         * @param options     Options which configure application rendering behavior
+         */
+        protected _replaceHTML(
+            result: Record<string, HTMLElement>,
+            content: HTMLElement,
+            options: HandlebarsRenderOptions,
+        ): void;
+
+        /**
+         * Prepare data used to synchronize the state of a template part.
+         * @param partId       The id of the part being rendered
+         * @param newElement   The new rendered HTML element for the part
+         * @param priorElement The prior rendered HTML element for the part
+         * @param state        A state object which is used to synchronize after replacement
+         */
+        protected _preSyncPartState(
+            partId: string,
+            newElement: HTMLElement,
+            priorElement: HTMLElement,
+            state: object,
+        ): void;
+
+        /**
+         * Synchronize the state of a template part after it has been rendered and replaced in the DOM.
+         * @param partId                  The id of the part being rendered
+         * @param newElement              The new rendered HTML element for the part
+         * @param priorElement            The prior rendered HTML element for the part
+         * @param state                   A state object which is used to synchronize after replacement
+         */
+        protected _syncPartState(
+            partId: string,
+            newElement: HTMLElement,
+            priorElement: HTMLElement,
+            state: object,
+        ): void;
+
+        /* -------------------------------------------- */
+        /*  Event Listeners and Handlers                */
+        /* -------------------------------------------- */
+
+        /**
+         * Attach event listeners to rendered template parts.
+         * @param partId       The id of the part being rendered
+         * @param htmlElement  The rendered HTML element for the part
+         * @param options       Rendering options passed to the render method
+         */
+        protected _attachPartListeners(
+            partId: string,
+            htmlElement: HTMLElement,
+            options: HandlebarsRenderOptions,
+        ): void;
+    }
+
+/** Augment an Application class with [Handlebars](https://handlebarsjs.com) template rendering behavior. */
+/* eslint-disable @typescript-eslint/no-unused-expressions, no-unused-expressions */
+export default function HandlebarsApplicationMixin<T extends AbstractConstructorOf<ApplicationV2>>(
+    BaseApplication: T,
+): AbstractMixin<T, HandlebarsApplicationMixin_base, typeof HandlebarsApplicationMixin_base & typeof ApplicationV2> {
+    abstract class HandlebarsApplication extends (BaseApplication as AbstractConstructorOf<ApplicationV2>) {
+        declare static PARTS: Record<string, HandlebarsTemplatePart>;
+
+        /** A record of all rendered template pa rts. */
         get parts(): Record<string, HTMLElement> {
             return {};
         }
@@ -137,7 +232,7 @@ export default function HandlebarsApplicationMixin<TBase extends AbstractConstru
         }
     }
 
-    return HandlebarsApplication;
+    return HandlebarsApplication as unknown as AbstractMixin<T, HandlebarsApplicationMixin_base, typeof HandlebarsApplicationMixin_base & typeof ApplicationV2>;
 }
 
 export interface HandlebarsTemplatePart {
