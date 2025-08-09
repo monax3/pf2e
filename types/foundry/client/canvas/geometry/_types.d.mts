@@ -1,3 +1,5 @@
+import { WallSenseType } from "@common/constants.mjs";
+import { PlaceableObject } from "../placeables/_module.mjs";
 import { PointEffectSource } from "../sources/point-effect-source.mjs";
 import { Ray } from "./_module.mjs";
 import { CollisionResult } from "./edges/collision.mjs";
@@ -41,7 +43,25 @@ export interface PointSourcePolygonConfig {
     boundingBox?: PIXI.Rectangle;
 }
 
-type EdgeType = "wall" | "darkness" | "light" | "innerBounds" | "outerBounds";
+export interface EdgeOptions {
+    id?: string;
+    object?: PlaceableObject;
+    type?: EdgeType;
+    /** How this edge restricts light */
+    light?: WallSenseType;
+    /** How this edge restricts movement */
+    move?: WallSenseType;
+    /** How this edge restricts sight */
+    sight?: WallSenseType;
+    /** How this edge restricts sound */
+    sound?: WallSenseType;
+    /** A direction of effect for the edge */
+    direction?: number;
+    /** Configuration of threshold data for this edge */
+    threshold?: unknown;
+}
+
+export type EdgeType = "wall" | "darkness" | "light" | "innerBounds" | "outerBounds";
 
 /**
  * @example
