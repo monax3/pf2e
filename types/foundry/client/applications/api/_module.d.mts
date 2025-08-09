@@ -6,3 +6,4 @@ export * from "./document-sheet.mjs";
 export { default as DocumentSheetV2 } from "./document-sheet.mjs";
 export * from "./handlebars-application.mjs";
 export { default as HandlebarsApplicationMixin } from "./handlebars-application.mjs";
+export { default as CategoryBrowser } from "./category-browser.mjs";
