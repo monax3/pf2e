@@ -1,18 +1,16 @@
-import { TokenShape } from "@client/canvas/placeables/token.mjs";
+export * from "@common/documents/_types.mjs";
 import ApplicationV2 from "../client/applications/api/application.mjs";
 import Application from "../client/appv1/api/application-v1.mjs";
 import { DataModelConstructionContext } from "./abstract/_types.mjs";
 import DataModel from "./abstract/data.mjs";
 import Document from "./abstract/document.mjs";
-import * as CONST from "./constants.mjs";
 import { DataField } from "./data/fields.mjs";
-import { GridOffset2D } from "./grid/_types.mjs";
 import Color from "./utils/color.mjs";
 
 /* ----------------------------------------- */
 /*  Data Model                               */
 /* ----------------------------------------- */
-
+// FIXME
 export interface DocumentConstructionContext<TParent extends Document | null>
     extends DataModelConstructionContext<TParent> {
     /** The compendium collection ID which contains this Document, if any */
@@ -30,20 +28,20 @@ type Builtin = Date | Function | Uint8Array | string | number | boolean | symbol
  */
 type DeepReadonly<T> = {
     readonly [K in keyof T]: T[K] extends undefined | null | boolean | number | string | symbol | bigint | Function
-        ? T[K]
-        : T[K] extends Array<infer V>
-          ? ReadonlyArray<DeepReadonly<V>>
-          : T[K] extends Map<infer K, infer V>
-            ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>>
-            : T[K] extends Set<infer V>
-              ? ReadonlySet<DeepReadonly<V>>
-              : DeepReadonly<T[K]>;
+    ? T[K]
+    : T[K] extends Array<infer V>
+    ? ReadonlyArray<DeepReadonly<V>>
+    : T[K] extends Map<infer K, infer V>
+    ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>>
+    : T[K] extends Set<infer V>
+    ? ReadonlySet<DeepReadonly<V>>
+    : DeepReadonly<T[K]>;
 };
 
 /**
  * A 2D point, expressed as an array [x, y].
  */
-export interface Point {
+interface Point {
     /** The x-coordinate in pixels */
     x: number;
     /** The y-coordinate of the top-left corner */
@@ -53,12 +51,12 @@ export interface Point {
 /**
  * A single point, expressed as an array [x,y]
  */
-export type PointArray = [x: number, y: number];
+type PointArray = [x: number, y: number];
 
 /**
  * A 3D point, expessed as {x, y, elevation}.
  */
-export interface ElevatedPoint extends Point {
+interface ElevatedPoint extends Point {
     /** The elevation in grid units */
     elevation: number;
 }
@@ -77,7 +75,7 @@ interface Rectangle {
     height: number;
 }
 
-type BuiltinTypes = NumberConstructor | StringConstructor | BooleanConstructor;
+type BuiltinType = NumberConstructor | StringConstructor | BooleanConstructor;
 
 type ColorSource = number | [red: number, green: number, blue: number] | string | Color;
 
@@ -86,7 +84,7 @@ type ColorSource = number | [red: number, green: number, blue: number] | string 
 /* ----------------------------------------- */
 
 /** A Client Setting */
-export interface SettingConfig<
+interface SettingConfig<
     TChoices extends Record<string, unknown> | undefined = Record<string, unknown> | undefined,
 > {
     /** A unique machine-readable id for the setting */
@@ -105,24 +103,24 @@ export interface SettingConfig<
     requiresReload?: boolean;
     /** The JS Type that the Setting is storing */
     type:
-        | NumberConstructor
-        | StringConstructor
-        | BooleanConstructor
-        | ObjectConstructor
-        | ArrayConstructor
-        | ConstructorOf<DataModel>
-        | DataField;
+    | NumberConstructor
+    | StringConstructor
+    | BooleanConstructor
+    | ObjectConstructor
+    | ArrayConstructor
+    | ConstructorOf<DataModel>
+    | DataField;
     /** For string Types, defines the allowable values */
     choices?: TChoices;
     /** For numeric Types, defines the allowable range */
-    range?: this["type"] extends NumberConstructor ? { min: number; max: number; step: number } : never;
+    range?: this["type"] extends NumberConstructor ? { min: number; max: number; step: number; } : never;
     /** The default value */
     default?: number | string | boolean | object | (() => number | string | boolean | object);
     /** Executes when the value of this Setting changes */
     onChange?: (choice: TChoices extends object ? keyof TChoices : unknown) => void | Promise<void>;
 }
 
-export interface SettingSubmenuConfig {
+interface SettingSubmenuConfig {
     /** The human readable name */
     name: string;
     /** The human readable label */
@@ -138,7 +136,7 @@ export interface SettingSubmenuConfig {
 }
 
 /** A Client Keybinding Action Configuration */
-export interface KeybindingActionConfig {
+interface KeybindingActionConfig {
     /** The namespace within which the action was registered */
     namespace?: string;
     /** The human readable name */
@@ -165,7 +163,7 @@ export interface KeybindingActionConfig {
     order?: number;
 }
 
-export interface KeybindingActionBinding {
+interface KeybindingActionBinding {
     /** A numeric index which tracks this bindings position during form rendering */
     index?: number;
     /** The KeyboardEvent#code value from https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values */
@@ -175,7 +173,7 @@ export interface KeybindingActionBinding {
 }
 
 /** An action that can occur when a key is pressed */
-export interface KeybindingAction {
+interface KeybindingAction {
     /** The namespaced machine identifier of the Action */
     action: string;
     /** The Keyboard key */
@@ -203,7 +201,7 @@ export interface KeybindingAction {
 /**
  * Keyboard event context
  */
-export interface KeyboardEventContext {
+interface KeyboardEventContext {
     /** The normalized string key, such as "A" */
     key: string;
     /** The originating keypress event */
@@ -229,7 +227,7 @@ export interface KeyboardEventContext {
 /**
  * Connected Gamepad info
  */
-export interface ConnectedGamepad {
+interface ConnectedGamepad {
     /** A map of axes values */
     axes: Map<string, number>;
     /** The Set of pressed Buttons */
@@ -240,9 +238,9 @@ export interface ConnectedGamepad {
 /*  Socket Requests and Responses            */
 /* ----------------------------------------- */
 
-export type RequestData = object | object[] | string | string[];
+type RequestData = object | object[] | string | string[];
 
-export interface SocketRequest {
+interface SocketRequest {
     /** The type of object being modified */
     type?: string;
     /** The server-side action being requested */
@@ -260,7 +258,7 @@ export interface SocketRequest {
     options?: object;
 }
 
-export interface SocketResponse {
+interface SocketResponse {
     /** The initial request */
     request: SocketRequest;
     /** An error, if one occurred */
@@ -273,42 +271,27 @@ export interface SocketResponse {
     result: Record<string, unknown>[];
 }
 
-/* ----------------------------------------- */
-/*  Token Typedefs                           */
-/* ----------------------------------------- */
-
-interface TokenPosition extends ElevatedPoint {
-    /** The width in grid spaces (positive). */
-    width: number;
-    /** The height in grid spaces (positive). */
-    height: number;
-    /** The shape type (see {@link CONST.TOKEN_SHAPES}). */
-    shape: TokenShape;
-}
-
-type TokenDimensions = Pick<TokenPosition, "width" | "height" | "shape">;
-
-interface TokenHexagonalOffsetsData {
-    /** The occupied offsets in an even grid in the 0th row/column */
-    even: GridOffset2D[];
-    /** The occupied offsets in an odd grid in the 0th row/column */
-    odd: GridOffset2D[];
-    /** The anchor in normalized coordiantes */
-    anchor: Point;
-}
-
-/**
- * The hexagonal shape of a Token.
- */
-interface TokenHexagonalShapeData {
-    /** The occupied offsets in even/odd rows/columns */
-    offsets: { even: GridOffset2D[]; odd: GridOffset2D[] };
-    /** The points in normalized coordinates */
-    points: number[];
-    /** The center of the shape in normalized coordiantes */
-    center: Point;
-    /** The snapping anchor in normalized coordiantes, i.e. the top-left grid hex center in the snapped position */
-    anchor: Point;
-}
-
 type ModifierKey = "Control" | "Shift" | "Alt";
+
+export {
+    Builtin,
+    BuiltinType,
+    ColorSource,
+    ConnectedGamepad,
+    ConstructorOf as Constructor,
+    DeepPartial,
+    DeepReadonly,
+    ElevatedPoint,
+    KeybindingAction,
+    KeybindingActionBinding,
+    KeybindingActionConfig,
+    KeyboardEventContext,
+    Point,
+    PointArray,
+    Rectangle,
+    RequestData,
+    SettingConfig,
+    SettingSubmenuConfig,
+    SocketRequest,
+    SocketResponse
+};
