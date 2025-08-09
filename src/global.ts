@@ -11,7 +11,6 @@ import type Config from "@client/config.d.mts";
 import type WallDocument from "@client/documents/wall.d.mts";
 import type { FoundryUI } from "@client/ui.d.mts";
 import type { CompendiumUUID } from "@client/utils/_module.d.mts";
-import type { SettingConfig } from "@common/_types.d.mts";
 import type { ImageFilePath, RollMode, UserRole } from "@common/constants.d.mts";
 import type { ItemPF2e, PhysicalItemPF2e } from "@item";
 import type { ConditionSource } from "@item/condition/data.ts";
@@ -341,12 +340,6 @@ declare global {
             lte: (a: number, b: number) => boolean;
             ne: (a: number, b: number) => boolean;
             ternary: (condition: boolean | number, ifTrue: number, ifFalse: number) => number;
-        }
-    }
-
-    namespace foundry {
-        interface ClientSettingsMap {
-            get(key: "pf2e.worldClock"): SettingConfig & { default: WorldClockSettingData };
         }
     }
 
