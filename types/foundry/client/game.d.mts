@@ -153,6 +153,7 @@ export default class Game<
         WorldCollection<TActor | TItem | JournalEntry | TMacro | Playlist | RollTable | TScene>
     >;
 
+    cards: collections.CardStacks;
     combats: collections.CombatEncounters<TCombat>;
     folders: collections.Folders;
     items: collections.Items<TItem>;
