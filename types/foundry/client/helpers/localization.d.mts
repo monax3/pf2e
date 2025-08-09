@@ -147,4 +147,4 @@ export default class Localization {
     getListFormatter(options?: { style?: Intl.ListFormatStyle; type?: Intl.ListFormatType }): Intl.ListFormat;
 }
 
-type TranslationDictionaryValue = string | { [key: string]: TranslationDictionaryValue };
+export type TranslationDictionaryValue = string | { [key: string]: TranslationDictionaryValue };
