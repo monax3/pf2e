@@ -6,6 +6,7 @@
     "exports": {
         ".": "./index.d.ts",
         "./assert-system": "./assert-system.d.ts",
+        "./dice-so-nice": "./types/dice-so-nice/index.d.ts",
         "./lib-wrapper": "./types/lib-wrapper/index.d.ts",
         "./quench": "./types/quench/index.d.ts",
         "./en.json": "./types/pf2e/en.json",

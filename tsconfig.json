@@ -84,6 +84,7 @@
             "showdown",
             "tooltipster",
             "lib-wrapper",
+            "dice-so-nice"
         ],
         "typeRoots": [
             "./node_modules/@types",
