@@ -2,6 +2,7 @@ import PlaceableObject from "@client/canvas/placeables/placeable-object.mjs";
 import { Point } from "@common/_types.mjs";
 import { WallSenseType } from "@common/constants.mjs";
 import PolygonVertex from "./vertex.mjs";
+import { EdgeOptions, EdgeType } from "../_types.mjs";
 
 /**
  * A data structure used to represent potential edges used by the ClockwiseSweepPolygon.
@@ -15,7 +16,7 @@ export default class Edge {
      * @param {object} [options]            Additional options which describe the edge
      * @param {string} [options.id]               A string used to uniquely identify this edge
      * @param {PlaceableObject} [options.object]  A PlaceableObject that is responsible for this edge, if any
-     * @param {EdgeTypes} [options.type]          The type of edge
+     * @param {EdgeType} [options.type]          The type of edge
      * @param {WALL_SENSE_TYPES} [options.light]  How this edge restricts light
      * @param {WALL_SENSE_TYPES} [options.move]   How this edge restricts movement
      * @param {WALL_SENSE_TYPES} [options.sight]  How this edge restricts sight
@@ -121,23 +122,3 @@ export default class Edge {
     /** Remove intersections of this edge with all other edges. */
     removeIntersections(): void;
 }
-
-interface EdgeOptions {
-    id?: string;
-    object?: PlaceableObject;
-    type?: EdgeTypes;
-    /** How this edge restricts light */
-    light?: WallSenseType;
-    /** How this edge restricts movement */
-    move?: WallSenseType;
-    /** How this edge restricts sight */
-    sight?: WallSenseType;
-    /** How this edge restricts sound */
-    sound?: WallSenseType;
-    /** A direction of effect for the edge */
-    direction?: number;
-    /** Configuration of threshold data for this edge */
-    threshold?: unknown;
-}
-
-type EdgeTypes = "wall" | "darkness" | "innerBounds" | "outerBounds";
