@@ -481,6 +481,7 @@ export default interface Config<
     Wall: {
         documentClass: ConstructorOf<TWallDocument>;
         objectClass: ConstructorOf<placeables.Wall<TWallDocument>>;
+        doorSounds: Record<string, WallDoorSound>;
     };
 
     /* -------------------------------------------- */
