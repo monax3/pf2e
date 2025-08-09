@@ -91,4 +91,4 @@ export default class ClientIssues {
     get packageCompatibilityIssues(): Record<string, PackageCompatibilityIssue>;
 }
 
-export {};
+export { ModuleSubTypeCounts, PackageCompatibilityIssue, UsabilityIssue };
