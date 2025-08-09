@@ -3,6 +3,7 @@
 
 import "./types/foundry/global-external.d.mts";
 import "./types/pf2e/global.d.ts";
+import "./types/pf2e/hooks.d.ts";
 import "./augments.d.ts";
 
 export type * from "./types/pf2e/global.d.ts";
