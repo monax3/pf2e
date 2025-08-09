@@ -50,4 +50,4 @@ export default class MainMenu extends HandlebarsApplicationMixin(
     toggle(): Promise<void>;
 }
 
-export {};
+export { MainMenuItem };
