@@ -108,7 +108,7 @@ declare global {
             ready: () => Return;
         }
 
-        interface Applications {
+        interface DefaultApplications {
             DialogV2: DialogV2;
             ChatLog: ChatLog;
             ChatPopout: foundry.applications.sidebar.apps.ChatPopout;
@@ -147,15 +147,21 @@ declare global {
             SceneNavigation: foundry.applications.ui.SceneNavigation;
         }
 
+        interface SystemApplications {}
+        type Applications = { [K in keyof DefaultApplications | keyof SystemApplications]: K extends keyof SystemApplications ? SystemApplications[K] : K extends keyof DefaultApplications ? DefaultApplications[K] : never };
+
         interface ApplicationRenderContexts {
             TokenHUD: PlaceableHUDContext
         }
 
-        interface ApplicationsV1 {
+        interface DefaultApplicationsV1 {
             ActorSheet: foundry.appv1.sheets.ActorSheet<Actor>;
             ItemSheet: foundry.appv1.sheets.ItemSheet<Item, foundry.appv1.api.DocumentSheetV1Options>;
             Dialog: Dialog;
         }
+
+        interface SystemApplicationsV1 {}
+        type ApplicationsV1 = { [K in keyof DefaultApplicationsV1 | keyof SystemApplicationsV1]: K extends keyof SystemApplicationsV1 ? SystemApplicationsV1[K] : K extends keyof DefaultApplicationsV1 ? DefaultApplicationsV1[K] : never };
 
         type ApplicationRenderContext<K extends keyof Applications> = K extends keyof ApplicationRenderContexts ? ApplicationRenderContexts[K] : foundry.applications.types.ApplicationRenderContext;
 
@@ -170,7 +176,7 @@ declare global {
 
         interface ApplicationHooks extends RenderHooks, CloseHooks, GetHeaderControls, GetDocumentContextOptions, RenderHooksV1, CloseHooksV1, GetApplicationHeaderButtonsV1 { }
 
-        interface DocumentClasses {
+        interface DefaultDocumentClasses {
             Actor: typeof Actor;
             Card: typeof foundry.documents.Card<foundry.documents.Cards>;
             ChatMessage: typeof ChatMessage;
@@ -208,6 +214,9 @@ declare global {
             User: typeof foundry.documents.User,
             Wall: typeof foundry.documents.WallDocument,
         }
+
+        interface SystemDocumentClasses {}
+        type DocumentClasses = { [K in keyof DefaultDocumentClasses]: K extends keyof SystemDocumentClasses ? SystemDocumentClasses[K] : DefaultDocumentClasses[K] };
 
         type Documents = {
             [K in keyof DocumentClasses]: InstanceType<DocumentClasses[K]>;
