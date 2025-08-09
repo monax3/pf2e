@@ -7,11 +7,10 @@ import type { CheckRoll } from "@system/check/roll.ts";
 import type { DamageRoll } from "@system/damage/roll.ts";
 import type { WorldClockSettings } from "@system/settings/world-clock.ts";
 
-declare global {
-    namespace Hooks {
-        interface Applications {
-            WorldClockSettings: WorldClockSettings;
-        }
+declare module "@client/helpers/hooks.mjs" {
+    interface SystemApplications {
+        WorldClockSettings: WorldClockSettings;
+    }
 
     interface AllHooks {
         "pf2e.startTurn": (combatant: Maybe<CombatantPF2e>, encounter: EncounterPF2e, userId: string) => HookReturn;
