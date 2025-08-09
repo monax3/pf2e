@@ -130,6 +130,6 @@ export default class Folder<TDocument extends EnfolderableDocument = Enfolderabl
     getParentFolders(): Folder<TDocument>[];
 }
 
-export type EnfolderableDocument = Actor<null> | Item<null> | Macro | Scene | JournalEntry | RollTable;
+export type EnfolderableDocument = Actor<null> | Item<null> | Macro | Scene | JournalEntry | RollTable | Playlist;
 
 export {};
