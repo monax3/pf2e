@@ -86,7 +86,7 @@ declare type ChatSpeakerSchema = {
     alias: fields.StringField<string, string, false, false, true>;
 };
 
-export type ChatSpeakerData = fields.SourceFromSchema<ChatSpeakerSchema>;
+export type ChatSpeakerData = Partial<fields.SourceFromSchema<ChatSpeakerSchema>>;
 
 interface ChatMessageMetadata extends DocumentMetadata {
     name: "ChatMessage";
