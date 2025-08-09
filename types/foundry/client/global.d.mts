@@ -20,7 +20,6 @@ declare global {
     namespace globalThis {
         export import ClipperLib = clipperlib;
         export import CONST = constants;
-        export import Hooks = foundry.helpers.Hooks;
         export import PIXI = PixiJS;
         export import TinyMCE = tinymce;
         export import foundry = globalFoundry;

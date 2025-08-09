@@ -522,12 +522,18 @@ class Check {
             );
         })();
         unevaluatedNewRoll.options.isReroll = true;
-        Hooks.callAll("pf2e.preReroll", Roll.fromJSON(oldRollJSON), unevaluatedNewRoll, resource, options.keep);
+        Hooks.callAll(
+            "pf2e.preReroll",
+            Roll.fromJSON(oldRollJSON) as Rolled<CheckRoll>,
+            unevaluatedNewRoll,
+            resource,
+            options.keep,
+        );
 
         // Evaluate the new roll and call a second hook allowing the roll to be altered
         const allowInteractive = context.rollMode !== "blindroll";
         const newRoll = await unevaluatedNewRoll.evaluate({ allowInteractive });
-        Hooks.callAll("pf2e.reroll", Roll.fromJSON(oldRollJSON), newRoll, resource, options.keep);
+        Hooks.callAll("pf2e.reroll", Roll.fromJSON(oldRollJSON) as Rolled<CheckRoll>, newRoll, resource, options.keep);
 
         // Keep the new roll by default; Old roll is discarded
         let keptRoll = newRoll;

@@ -1,4 +1,3 @@
-import type { HookParamsTargetToken } from "@client/helpers/hooks.d.mts";
 import { TokenPF2e } from "@module/canvas/index.ts";
 import type { TokenDocumentPF2e } from "@scene";
 import { Predicate } from "@system/predication.ts";
@@ -33,7 +32,7 @@ class MarkTargetPrompt {
             document.activeElement.blur();
         }
 
-        const hookParams: HookParamsTargetToken = [
+        const hookParams: Hook<"targetToken"> = [
             "targetToken",
             (_user, token, targeted) => {
                 this.#target = targeted && token instanceof TokenPF2e ? token.document : null;
@@ -55,7 +54,7 @@ class MarkTargetPrompt {
     }
 
     /** Generate a keyboard event handler watching for an Escape keystroke to cancel the targeting operation */
-    #cancelHandler(hookParams: HookParamsTargetToken): (event: KeyboardEvent) => void {
+    #cancelHandler<H extends HookName>(hookParams: Hook<H>): (event: KeyboardEvent) => void {
         const handler = (event: KeyboardEvent): void => {
             if (event.key !== "Escape") return;
             event.stopPropagation();
