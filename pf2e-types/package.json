@@ -6,6 +6,7 @@
     "exports": {
         ".": "./index.d.ts",
         "./assert-system": "./assert-system.d.ts",
+        "./lib-wrapper": "./types/lib-wrapper/index.d.ts",
         "./quench": "./types/quench/index.d.ts",
         "./en.json": "./types/pf2e/en.json",
         "./foundry": "./types/foundry/client/client.d.mts",
