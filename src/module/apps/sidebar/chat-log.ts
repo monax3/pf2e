@@ -66,7 +66,12 @@ class ChatLogPF2e extends fa.sidebar.tabs.ChatLog {
         if (!isRollCommand || !Array.isArray(matches)) return super.processMessage(message, options);
 
         const speaker = (options.speaker ??= ChatMessagePF2e.getSpeaker());
-        const chatData: DeepPartial<ChatMessageSource> = { speaker, author: game.user.id, flavor: "" };
+        const chatData: DeepPartial<ChatMessageSource> &
+            Required<Pick<DeepPartial<ChatMessageSource>, "speaker" | "author">> = {
+            speaker,
+            author: game.user.id,
+            flavor: "",
+        };
         const actor = ChatMessagePF2e.getSpeakerActor(speaker) ?? game.user.character;
         const rollData = actor?.getRollData() ?? {};
         const rolls: Rolled<Roll>[] = [];
@@ -90,7 +95,8 @@ class ChatLogPF2e extends fa.sidebar.tabs.ChatLog {
                 return super.processMessage(message, options);
             }
         }
-        if (Hooks.call("chatMessage", this, message, chatData) === false) return;
+        if (Hooks.call("chatMessage", this, message, { speaker: chatData.speaker, user: chatData.author }) === false)
+            return;
         chatData.rolls = rolls.map((r) => JSON.stringify(r.toJSON()));
         chatData.sound ??= CONFIG.sounds.dice;
         chatData.content = rolls.reduce((t, r) => t + r.total, 0).toString();
