@@ -1,6 +1,7 @@
 /** @module helpers */
 
 export * from "./_types.mjs";
+export * as types from "./_types.mjs";
 export { default as ClientIssues } from "./client-issues.mjs";
 export { default as ClientSettings } from "./client-settings.mjs";
 export { default as DocumentIndex } from "./document-index.mjs";
