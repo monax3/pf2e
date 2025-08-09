@@ -42,6 +42,7 @@ declare const defaultPlugins: {
     tables: Plugin;
 };
 
+export * as types from "./_types.mjs";
 export * as commands from "prosemirror-commands";
 export * as input from "prosemirror-inputrules";
 export * as list from "prosemirror-schema-list";

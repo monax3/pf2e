@@ -1,4 +1,5 @@
 export * from "./_types.mjs";
+export * as types from "./_types.mjs";
 
 export { default as CachedContainer } from "./advanced/cached-container.mjs";
 export { default as FullCanvasObjectMixin } from "./advanced/full-container-mixin.mjs";

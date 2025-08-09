@@ -1,4 +1,5 @@
 export * from "./_types.mjs";
+export * as types from "./_types.mjs";
 
 export * as regions from "./regions/_module.mjs";
 export * as tokens from "./tokens/_module.mjs";
