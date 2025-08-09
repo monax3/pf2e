@@ -89,3 +89,4 @@ type MacroSchema = {
 };
 
 export type MacroSource = fields.SourceFromSchema<MacroSchema>;
+export type MacroData = fields.ModelPropsFromSchemaWithOptional<MacroSchema>;

@@ -1,4 +1,5 @@
-import { ElevatedPoint, TokenDimensions, TokenPosition } from "@common/_types.mjs";
+import { ElevatedPoint } from "@common/_types.mjs";
+import { TokenDimensions, TokenPosition } from "@common/documents/_types.mjs";
 import Document, { DocumentMetadata } from "@common/abstract/document.mjs";
 import { ImageFilePath, TokenDisplayMode, TokenDisposition, VideoFilePath } from "@common/constants.mjs";
 import { GridOffset3D } from "@common/grid/_types.mjs";

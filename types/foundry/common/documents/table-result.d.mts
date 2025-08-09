@@ -62,3 +62,4 @@ type TableResultSchema = {
 };
 
 export type TableResultSource = fields.SourceFromSchema<TableResultSchema>;
+export type TableResultData = fields.ModelPropsFromSchemaWithOptional<TableResultSchema>;

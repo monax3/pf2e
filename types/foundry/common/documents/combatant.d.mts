@@ -47,3 +47,4 @@ type CombatantSchema = {
 };
 
 export type CombatantSource = fields.SourceFromSchema<CombatantSchema>;
+export type CombatantData = fields.ModelPropsFromSchemaWithOptional<CombatantSchema>;

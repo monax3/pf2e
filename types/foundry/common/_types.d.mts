@@ -15,7 +15,7 @@ export interface DocumentConstructionContext<TParent extends Document | null>
     pack?: string | null;
 }
 
-type Builtin = Date | Function | Uint8Array | string | number | boolean | symbol | null | undefined;
+export type Builtin = Date | Function | Uint8Array | string | number | boolean | symbol | null | undefined;
 
 /* ----------------------------------------- */
 /*  Reusable Type Definitions                */
@@ -24,7 +24,7 @@ type Builtin = Date | Function | Uint8Array | string | number | boolean | symbol
 /**
  * Make all properties in T recursively readonly.
  */
-type DeepReadonly<T> = {
+export type DeepReadonly<T> = {
     readonly [K in keyof T]: T[K] extends undefined | null | boolean | number | string | symbol | bigint | Function
         ? T[K]
         : T[K] extends Array<infer V>
@@ -62,7 +62,7 @@ export interface ElevatedPoint extends Point {
 /**
  * A standard rectangle interface.
  */
-interface Rectangle {
+export interface Rectangle {
     /** The x-coordinate of the top-left corner */
     x: number;
     /** The y-coordinate of the top-left corner */
@@ -73,9 +73,9 @@ interface Rectangle {
     height: number;
 }
 
-type BuiltinTypes = NumberConstructor | StringConstructor | BooleanConstructor;
+export type BuiltinType = NumberConstructor | StringConstructor | BooleanConstructor;
 
-type ColorSource = number | [red: number, green: number, blue: number] | string | Color;
+export type ColorSource = number | [red: number, green: number, blue: number] | string | Color;
 
 /* ----------------------------------------- */
 /*  Socket Requests and Responses            */
@@ -114,40 +114,7 @@ export interface SocketResponse {
     result: Record<string, unknown>[];
 }
 
-/* ----------------------------------------- */
-/*  Token Typedefs                           */
-/* ----------------------------------------- */
-
-interface TokenPosition extends ElevatedPoint {
-    /** The width in grid spaces (positive). */
-    width: number;
-    /** The height in grid spaces (positive). */
-    height: number;
-    /** The shape type (see {@link CONST.TOKEN_SHAPES}). */
-    shape: TokenShape;
-}
-
-type TokenDimensions = Pick<TokenPosition, "width" | "height" | "shape">;
-
-interface TokenHexagonalOffsetsData {
-    /** The occupied offsets in an even grid in the 0th row/column */
-    even: GridOffset2D[];
-    /** The occupied offsets in an odd grid in the 0th row/column */
-    odd: GridOffset2D[];
-    /** The anchor in normalized coordiantes */
-    anchor: Point;
-}
-
-/**
- * The hexagonal shape of a Token.
- */
-interface TokenHexagonalShapeData {
-    /** The occupied offsets in even/odd rows/columns */
-    offsets: { even: GridOffset2D[]; odd: GridOffset2D[] };
-    /** The points in normalized coordinates */
-    points: number[];
-    /** The center of the shape in normalized coordiantes */
-    center: Point;
-    /** The snapping anchor in normalized coordiantes, i.e. the top-left grid hex center in the snapped position */
-    anchor: Point;
-}
+export {
+    ConstructorOf as Constructor,
+    DeepPartial,
+};

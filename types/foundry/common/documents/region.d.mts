@@ -61,5 +61,6 @@ type RegionElevationSchema = {
 type RegionVisibilityValue = (typeof REGION_VISIBILITY)[keyof typeof REGION_VISIBILITY];
 
 export type RegionSource = fields.SourceFromSchema<RegionSchema>;
+export type RegionData = fields.ModelPropsFromSchemaWithOptional<RegionSchema>;
 
 export {};

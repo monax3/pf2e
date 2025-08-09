@@ -59,3 +59,8 @@ export type RegionBehaviorSource<
     TType extends string = string,
     TSystemData extends object = object,
 > = fields.SourceFromSchema<RegionBehaviorSchema<TType, TSystemData>>;
+
+export type RegionBehaviorData<
+    TType extends string = string,
+    TSystemData extends object = object,
+> = fields.ModelPropsFromSchemaWithOptional<RegionBehaviorSchema<TType, TSystemData>>;

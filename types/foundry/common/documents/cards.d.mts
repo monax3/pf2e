@@ -93,3 +93,4 @@ type CardsSchema = {
 type CardsType = CardsMetadata["coreTypes"][number];
 
 export type CardsSource = fields.SourceFromSchema<CardsSchema>;
+export type CardsData = fields.ModelPropsFromSchemaWithOptional<CardsSchema>;

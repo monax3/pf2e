@@ -46,5 +46,6 @@ type PlaylistSchema = {
 };
 
 export type PlaylistSource = fields.SourceFromSchema<PlaylistSchema>;
+export type PlaylistData = fields.ModelPropsFromSchemaWithOptional<PlaylistSchema>;
 
 export {};
