@@ -30,3 +30,5 @@ declare global {
         documentUUID?: DocumentUUID;
     }
 }
+
+export { ProseMirrorInputConfig };
