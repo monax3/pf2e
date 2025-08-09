@@ -1,5 +1,7 @@
 import { ImageFilePath } from "@common/constants.mjs";
 
+export { TranslationDictionaryValue } from "./localization.mjs";
+
 export interface CompendiumArtInfo {
     /** The path to the Actor's portrait image. */
     actor?: ImageFilePath;
