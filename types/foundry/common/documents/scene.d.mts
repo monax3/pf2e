@@ -1,6 +1,7 @@
 import { DatabaseOperation } from "@common/abstract/_types.mjs";
 import { GridType, ImageFilePath, VideoFilePath } from "@common/constants.mjs";
 import { Document, DocumentMetadata, EmbeddedCollection } from "../abstract/_module.mjs";
+import { BaseGrid } from "../grid/base.mjs";
 import * as data from "../data/data.mjs";
 import * as fields from "../data/fields.mjs";
 import * as documents from "./_module.mjs";
@@ -100,7 +101,7 @@ type SceneSchema = {
     // Grid Configuration
 
     /** Grid configuration for the scene */
-    grid: fields.SchemaField<GridDataSchema>;
+    grid: fields.SchemaField<GridDataSchema, fields.SourceFromSchema<GridDataSchema>, BaseGrid>;
 
     // Vision and Lighting Configuration
 
