@@ -8,6 +8,7 @@ import DocumentSheetV2 from "../../applications/api/document-sheet.mjs";
 import { Folder, Setting, WorldDocument } from "../_module.mjs";
 import CompendiumCollection from "../collections/compendium-collection.mjs";
 import { DirectoryCollectionConstructor } from "./directory-collection-mixin.mjs";
+import type { EnfolderableDocument } from "../folder.d.mts";
 
 export const DirectoryCollectionMix: DirectoryCollectionConstructor;
 
@@ -24,7 +25,7 @@ export default abstract class WorldCollection<
     /* -------------------------------------------- */
 
     /** Reference the set of Folders which contain documents in this collection */
-    get folders(): Collection<string, Folder>;
+    get folders(): Collection<string, Folder<TDocument extends EnfolderableDocument ? TDocument : EnfolderableDocument>>;
 
     /**
      * Return a reference to the SidebarDirectory application for this WorldCollection, or null if it has not yet
