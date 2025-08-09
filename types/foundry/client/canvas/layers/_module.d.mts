@@ -1,4 +1,5 @@
 export * from "./_types.mjs";
+export * as types from "./_types.mjs";
 
 // Base Layers
 export { default as CanvasLayer } from "./base/canvas-layer.mjs";
