@@ -77,16 +77,16 @@ export type ChatMessageFlags = DocumentFlags & {
 
 declare type ChatSpeakerSchema = {
     /** The _id of the Scene where this message was created */
-    scene: fields.ForeignDocumentField<string>;
+    scene: fields.ForeignDocumentField<string, false, false, false>;
     /** The _id of the Actor who generated this message */
-    actor: fields.ForeignDocumentField<string>;
+    actor: fields.ForeignDocumentField<string, false, false, false>;
     /** The _id of the Token who generated this message */
-    token: fields.ForeignDocumentField<string>;
+    token: fields.ForeignDocumentField<string, false, false, false>;
     /** An overridden alias name used instead of the Actor or Token name */
-    alias: fields.StringField<string, string, false, false, true>;
+    alias: fields.StringField<string, string, false, false, false>;
 };
 
-export type ChatSpeakerData = fields.SourceFromSchema<ChatSpeakerSchema>;
+export type ChatSpeakerData = fields.ModelPropsFromSchemaWithOptional<ChatSpeakerSchema>;
 
 interface ChatMessageMetadata extends DocumentMetadata {
     name: "ChatMessage";
