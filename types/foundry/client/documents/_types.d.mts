@@ -1,11 +1,16 @@
+export * from "@common/documents/_types.mjs";
 import { TokenConstrainMovementPathOptions, TokenMovementActionConfig } from "@client/_types.mjs";
 import Roll from "@client/dice/roll.mjs";
-import { ElevatedPoint, TokenPosition } from "@common/_types.mjs";
+import { ElevatedPoint } from "@common/_types.mjs";
 import DataModel from "@common/abstract/data.mjs";
 import { RegionMovementSegmentType, TokenShapeType } from "@common/constants.mjs";
-import { EffectChangeData, EffectDurationData } from "@common/documents/active-effect.mjs";
+import { EffectDurationData } from "@common/documents/active-effect.mjs";
 import { GridMeasurePathCostFunction3D } from "@common/grid/_types.mjs";
-import { Combat, Combatant, RegionDocument, TableResult, TokenDocument, User } from "./_module.mjs";
+import GlobalLightSource from "@client/canvas/sources/global-light-source.mjs";
+import { TokenDetectionMode } from "@client/canvas/perception/detection-mode.mjs";
+import { AmbientSoundEffect } from "@client/canvas/layers/sounds.mjs";
+import { TokenPosition } from "@common/documents/_types.mjs";
+import { User, Combat, Combatant, TokenDocument, RegionDocument, TableResult } from "./_module.mjs";
 
 /**
  * The data that is planned to be imported for the adventure, categorized into new documents that will be created and
@@ -64,31 +69,22 @@ interface AdventureImportResult {
 type AdventurePostImportCallback = (result: AdventureImportResult, options: AdventureImportOptions) => Promise<void>;
 
 interface ActiveEffectDuration extends EffectDurationData {
-    /**
-     * The duration type, either "seconds", "turns", or "none"
-     */
+    /** The duration type, either "seconds", "turns", or "none" */
     type: string;
-    /**
-     * The total effect duration, in seconds of world time or as a decimal
-     * number with the format {rounds}.{turns}
-     */
+
+    /** The total effect duration, in seconds of world time or as a decimal number with the format {rounds}.{turns} */
     duration: number | null;
-    /**
-     * The remaining effect duration, in seconds of world time or as a decimal
-     * number with the format {rounds}.{turns}
-     */
+
+    /** The remaining effect duration, in seconds of world time or as a decimal number with the format rounds.turns */
     remaining: number | null;
-    /**
-     * A formatted string label that represents the remaining duration
-     */
+
+    /** A formatted string label that represents the remaining duration */
     label: string;
-    /**
-     * An internal flag used determine when to recompute seconds-based duration
-     */
+
+    /** An internal flag used determine when to recompute seconds-based duration */
     _worldTime?: number;
-    /**
-     * An internal flag used determine when to recompute turns-based duration
-     */
+
+    /** An internal flag used determine when to recompute turns-based duration */
     _combatTime?: number;
 }
 
@@ -100,8 +96,11 @@ interface CombatHistoryData {
 }
 
 interface CombatTurnEventContext {
+    /** The round */
     round: number;
+    /** The turn */
     turn: number;
+    /** Was skipped? */
     skipped: boolean;
 }
 
@@ -408,7 +407,7 @@ interface TokenMeasuredMovementWaypoint {
 }
 
 interface TokenMovementWaypoint
-    extends Omit<TokenMeasuredMovementWaypoint, "terrain" | "intermediate" | "userId" | "movementId" | "cost"> {}
+    extends Omit<TokenMeasuredMovementWaypoint, "terrain" | "intermediate" | "userId" | "movementId" | "cost"> { }
 
 type TokenMovementSegmentData = Pick<
     TokenMeasuredMovementWaypoint,
@@ -525,7 +524,7 @@ interface TokenGetCompleteMovementPathWaypoint {
     intermediate?: boolean;
 }
 
-interface TokenCompleteMovementWaypoint extends Omit<TokenMeasuredMovementWaypoint, "userId" | "movementId" | "cost"> {}
+interface TokenCompleteMovementWaypoint extends Omit<TokenMeasuredMovementWaypoint, "userId" | "movementId" | "cost"> { }
 
 interface TokenSegmentizeMovementWaypoint {
     /**
@@ -592,6 +591,14 @@ interface TokenRegionMovementSegment {
      * The movement action between the waypoints.
      */
     action: string;
+    /**
+     * Teleport between the waypoints?
+     */
+    teleport: boolean;
+    /**
+     * Is the movement on this segment forced?
+     */
+    forced: boolean;
     /**
      * The terrain data of this segment.
      */
@@ -701,7 +708,7 @@ interface TokenMovementData {
     updateOptions: object;
 }
 
-interface TokenMovementOperation extends Omit<TokenMovementData, "user" | "state" | "updateOptions"> {}
+interface TokenMovementOperation extends Omit<TokenMovementData, "user" | "state" | "updateOptions"> { }
 
 interface TokenMovementContinuationData {
     /** The movement ID */
@@ -735,7 +742,7 @@ interface TokenMovementContinuationData {
     };
 }
 
-export interface TokenMovementContinuationHandle {
+interface TokenMovementContinuationHandle {
     /** The movement ID */
     movementId: string;
 
@@ -745,4 +752,87 @@ export interface TokenMovementContinuationHandle {
 
 type TokenResumeMovementCallback = () => Promise<boolean>;
 
-export { CombatHistoryData, EffectChangeData, EffectDurationData, TokenMovementOperation };
+export {
+    ActiveEffectDuration,
+    AdventureImportData,
+    AdventureImportOptions,
+    AdventureImportResult,
+    AdventurePostImportCallback,
+    AdventurePreImportCallback,
+    AmbientSoundEffect,
+    CombatHistoryData,
+    CombatRoundEventContext,
+    CombatTurnEventContext,
+    GlobalLightSource as GlobalLightData,
+    RegionBehaviorActivatedEvent,
+    RegionBehaviorDeactivatedEvent,
+    RegionBehaviorUnviewedEvent,
+    RegionBehaviorViewedEvent,
+    RegionEvent,
+    RegionMovementSegment,
+    RegionRegionBoundaryEvent,
+    RegionSegmentizeMovementPathWaypoint,
+    RegionTokenAnimateEvent,
+    RegionTokenAnimateEventData,
+    RegionTokenAnimateInEvent,
+    RegionTokenAnimateOutEvent,
+    RegionTokenEnterEvent,
+    RegionTokenEnterExitEvent,
+    RegionTokenEnterExitEventData,
+    RegionTokenExitEvent,
+    RegionTokenMoveEvent,
+    RegionTokenMoveEventData,
+    RegionTokenMoveInEvent,
+    RegionTokenMoveOutEvent,
+    RegionTokenMoveWithinEvent,
+    RegionTokenRoundEndEvent,
+    RegionTokenRoundEvent,
+    RegionTokenRoundEventData,
+    RegionTokenRoundStartEvent,
+    RegionTokenTurnEndEvent,
+    RegionTokenTurnEvent,
+    RegionTokenTurnEventData,
+    RegionTokenTurnStartEvent,
+    RollTableDraw,
+    SceneDimensions,
+    TokenCompleteMovementWaypoint,
+    TokenDetectionMode,
+    TokenGetCompleteMovementPathWaypoint,
+    TokenMeasureMovementPathOptions,
+    TokenMeasureMovementPathWaypoint,
+    TokenMeasuredMovementWaypoint,
+    TokenMovementContinuationData,
+    TokenMovementContinuationHandle,
+    TokenMovementCostFunction,
+    TokenMovementData,
+    TokenMovementHistoryData,
+    TokenMovementMethod,
+    TokenMovementOperation,
+    TokenMovementSectionData,
+    TokenMovementSegmentData,
+    TokenMovementState,
+    TokenMovementWaypoint,
+    TokenRegionMovementSegment,
+    TokenRegionMovementWaypoint,
+    TokenResumeMovementCallback,
+    TokenSegmentizeMovementWaypoint,
+    TrackedAttributesDescription,
+
+    /* FIXME Not Yet Implemented
+    TokenMovementCostAggregator,
+    RegionMovementSegment,
+    RegionSocketEvent,
+    SceneEnvironmentData,
+    TileRestrictionsData,
+    TokenBarData,
+    FolderChildNode,
+    JournalEntryCategoryData,
+    JournalEntryPageImageData,
+    JournalEntryPageTextData,
+    JournalEntryPageTitleData,
+    JournalEntryPageVideoData,
+    TokenOcclusionData,
+    TokenRingData,
+    TokenSightData,
+    */
+};
