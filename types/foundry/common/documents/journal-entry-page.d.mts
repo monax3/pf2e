@@ -80,5 +80,6 @@ type JournalEntryPageSchema<
 };
 
 export type JournalEntryPageSource = fields.SourceFromSchema<JournalEntryPageSchema>;
+export type JournalEntryPageData = fields.ModelPropsFromSchemaWithOptional<JournalEntryPageSchema>;
 
 export type CorePageType = "image" | "pdf" | "text" | "video";

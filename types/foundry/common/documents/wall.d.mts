@@ -76,3 +76,5 @@ type WallThresholdSchema = {
 };
 
 export type WallSource = fields.SourceFromSchema<WallSchema>;
+export type WallData = fields.ModelPropsFromSchemaWithOptional<WallSchema>;
+export type WallThresholdData = fields.ModelPropsFromSchemaWithOptional<WallThresholdSchema>;

@@ -104,3 +104,4 @@ type DrawingSchema = {
 };
 
 export type DrawingSource = fields.SourceFromSchema<DrawingSchema>;
+export type DrawingData = fields.ModelPropsFromSchemaWithOptional<DrawingSchema>;

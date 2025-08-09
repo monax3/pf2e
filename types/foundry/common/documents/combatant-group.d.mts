@@ -46,4 +46,6 @@ export type CombatantGroupSchema = {
     _stats: fields.DocumentStatsField;
 };
 
+export type CombatantGroupData = fields.ModelPropsFromSchemaWithOptional<CombatantGroupSchema>;
+
 export {};

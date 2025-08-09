@@ -63,3 +63,4 @@ type FolderSchema = {
 };
 
 export type FolderSource = fields.SourceFromSchema<FolderSchema>;
+export type FolderData = fields.ModelPropsFromSchemaWithOptional<FolderSchema>;

@@ -88,6 +88,8 @@ type CardSchema = {
     flags: fields.DocumentFlagsField;
 };
 
+export type CardData = fields.ModelPropsFromSchemaWithOptional<CardSchema>;
+
 type CardFaceSchema = {
     /** A name for this card face */
     name: fields.StringField<string, string, false, false, true>;
@@ -97,4 +99,4 @@ type CardFaceSchema = {
     img: fields.FilePathField<ImageFilePath | VideoFilePath>;
 };
 
-export type CardFaceData = fields.ModelPropsFromSchema<CardFaceSchema>;
+export type CardFaceData = fields.ModelPropsFromSchemaWithOptional<CardFaceSchema>;

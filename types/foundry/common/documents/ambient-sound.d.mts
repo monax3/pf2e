@@ -71,3 +71,4 @@ type AmbientSoundSchema = {
 };
 
 export type AmbientSoundSource = fields.SourceFromSchema<AmbientSoundSchema>;
+export type AmbientSoundData = fields.ModelPropsFromSchemaWithOptional<AmbientSoundSchema>;

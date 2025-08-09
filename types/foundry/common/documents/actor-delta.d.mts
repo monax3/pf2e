@@ -91,3 +91,4 @@ type ActorDeltaSchema = {
 };
 
 export type ActorDeltaSource = fields.SourceFromSchema<ActorDeltaSchema>;
+export type ActorDeltaData = fields.ModelPropsFromSchemaWithOptional<ActorDeltaSchema>;

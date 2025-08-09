@@ -1,6 +1,8 @@
-import { DeepReadonly, ElevatedPoint, Point, SocketRequest, SocketResponse, TokenPosition } from "@common/_types.mjs";
+export * from "@common/_types.mjs";
+import { ColorSource, DeepReadonly, ElevatedPoint, Point, SocketRequest, SocketResponse } from "@common/_types.mjs";
 import { DataModel } from "@common/abstract/_module.mjs";
 import { DataField } from "@common/data/fields.mjs";
+import { TokenPosition } from "@common/documents/_types.mjs";
 import { GridMeasurePathResultWaypoint, GridOffset3D } from "@common/grid/_types.mjs";
 import { DocumentHTMLEmbedConfig } from "./applications/ux/text-editor.mjs";
 import { AVSettingsData } from "./av/settings.mjs";
@@ -426,7 +428,7 @@ export interface TokenConstrainMovementPathOptions {
     history?: boolean | DeepReadonly<TokenMeasuredMovementWaypoint[]>;
 }
 
-interface TokenConstrainedMovementWaypoint
+export interface TokenConstrainedMovementWaypoint
     extends Omit<TokenMeasuredMovementWaypoint, "userId" | "movementId" | "cost"> {}
 
 export interface TokenFindMovementPathOptions {

@@ -128,3 +128,9 @@ export type ActorSource<
     TSystemSource extends object = object,
     TItemSource extends foundry.documents.ItemSource = foundry.documents.ItemSource,
 > = fields.SourceFromSchema<ActorSchema<TType, TSystemSource, TItemSource>>;
+
+export type ActorData<
+    TType extends string = string,
+    TSystemSource extends object = object,
+    TItemSource extends foundry.documents.ItemSource = foundry.documents.ItemSource,
+> = fields.ModelPropsFromSchemaWithOptional<ActorSchema<TType, TSystemSource, TItemSource>>;

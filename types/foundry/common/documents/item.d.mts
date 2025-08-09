@@ -94,3 +94,6 @@ export type ItemSchema<TType extends string = string, TSystemSource extends obje
 export type ItemSource<TType extends string = string, TSystemSource extends object = object> = fields.SourceFromSchema<
     ItemSchema<TType, TSystemSource>
 >;
+export type ItemData<TType extends string = string, TSystemSource extends object = object> = fields.ModelPropsFromSchemaWithOptional<
+    ItemSchema<TType, TSystemSource>
+>;

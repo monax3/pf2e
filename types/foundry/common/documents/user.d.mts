@@ -91,3 +91,4 @@ type UserSchema<TActor extends BaseActor<null>> = {
 };
 
 export type UserSource = fields.SourceFromSchema<UserSchema<BaseActor<null>>>;
+export type UserData = fields.ModelPropsFromSchemaWithOptional<UserSchema<BaseActor<null>>>;

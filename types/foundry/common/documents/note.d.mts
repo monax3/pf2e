@@ -86,3 +86,4 @@ type NoteSchema = {
 };
 
 export type NoteSource = fields.SourceFromSchema<NoteSchema>;
+export type NoteData = fields.ModelPropsFromSchemaWithOptional<NoteSchema>;

@@ -53,3 +53,4 @@ type JournalEntrySchema = {
 };
 
 export type JournalEntrySource = fields.SourceFromSchema<JournalEntrySchema>;
+export type JournalEntryData = fields.ModelPropsFromSchemaWithOptional<JournalEntrySchema>;

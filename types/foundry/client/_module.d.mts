@@ -101,3 +101,4 @@ export const ui: typeof globalUI;
  * Client/shared importable types.
  */
 export * from "./_types.mjs";
+export * as types from "./_types.mjs";

@@ -84,3 +84,4 @@ type MeasuredTemplateSchema = {
 };
 
 export type MeasuredTemplateSource = fields.SourceFromSchema<MeasuredTemplateSchema>;
+export type MeasuredTemplateData = fields.ModelPropsFromSchemaWithOptional<MeasuredTemplateSchema>;
