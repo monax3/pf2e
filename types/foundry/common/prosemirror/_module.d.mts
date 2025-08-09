@@ -11,7 +11,6 @@ import ProseMirrorContentLinkPlugin from "./content-link-plugin.mjs";
 import ProseMirrorDirtyPlugin from "./dirty-plugin.mjs";
 import DOMParser from "./dom-parser.mjs";
 import { ProseMirrorDropDown } from "./dropdown.mjs";
-import "./extensions.mjs";
 import ProseMirrorHighlightMatchesPlugin from "./highlight-matches-plugin.mjs";
 import ProseMirrorImagePlugin from "./image-plugin.mjs";
 import ProseMirrorInputRules from "./input-rules.mjs";
