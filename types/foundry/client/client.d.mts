@@ -74,6 +74,7 @@ export { ModuleSubTypeCounts, PackageCompatibilityIssue, UsabilityIssue } from "
 export { Notification, NotificationOptions } from "./applications/ui/notifications.mjs";
 export { CanvasDocument } from "./documents/abstract/canvas-document.mjs";
 export { ClientDocument } from "./documents/abstract/client-document.mjs";
+export { ProseMirrorInputConfig } from "./applications/elements/prosemirror-editor.mjs";
 export { default as ClientPackage } from "./packages/client-package.mjs";
 
 import ApplicationV2 from "./applications/api/application.mjs";
