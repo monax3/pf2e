@@ -1,7 +1,9 @@
-import { DeepReadonly, ElevatedPoint, Point, SocketRequest, SocketResponse, TokenPosition } from "@common/_types.mjs";
+export * from "@common/_types.mjs";
+export * from "@client/documents/_types.mjs";
 import { DataModel } from "@common/abstract/_module.mjs";
 import { DataField } from "@common/data/fields.mjs";
 import { EffectDurationData } from "@common/documents/active-effect.mjs";
+import { TokenPosition } from "@common/documents/_types.mjs";
 import { GridMeasurePathCostFunction3D, GridOffset3D } from "@common/grid/_types.mjs";
 import { DocumentHTMLEmbedConfig } from "./applications/ux/text-editor.mjs";
 import { AVSettingsData } from "./av/settings.mjs";
@@ -12,10 +14,11 @@ import AmbientLight from "./canvas/placeables/light.mjs";
 import Token, { TokenShape } from "./canvas/placeables/token.mjs";
 import PointVisionSource from "./canvas/sources/point-vision-source.mjs";
 import Roll from "./dice/roll.mjs";
-import { TableResult, TokenDocument, User } from "./documents/_module.mjs";
+import { TableResult, TokenDocument } from "./documents/_module.mjs";
 import { Color } from "./utils/_module.mjs";
+import type { ElevatedPoint, Point, SocketRequest, SocketResponse } from "@common/_types.mjs";
 
-export interface HotReloadData {
+interface HotReloadData {
     /** The type of package which was modified */
     packageType: string;
 
@@ -32,7 +35,7 @@ export interface HotReloadData {
     extension: string;
 }
 
-export interface RulerWaypoint {
+interface RulerWaypoint {
     /** The x-coordinate in pixels. */
     x: number;
 
@@ -65,7 +68,7 @@ export interface RulerWaypoint {
     next: RulerWaypoint | null;
 }
 
-export interface TokenMeasuredMovementWaypoint {
+interface TokenMeasuredMovementWaypoint {
     /** The top-left x-coordinate in pixels (integer). */
     x: number;
 
@@ -115,69 +118,16 @@ export interface TokenMeasuredMovementWaypoint {
     cost: number;
 }
 
-export type TokenMovementWaypoint = Omit<TokenMeasuredMovementWaypoint, "terrain" | "intermediate" | "userId" | "cost">;
+type TokenMovementWaypoint = Omit<TokenMeasuredMovementWaypoint, "terrain" | "intermediate" | "userId" | "cost">;
+type TokenConstrainedMovementWaypoint = Omit<TokenMeasuredMovementWaypoint, "userId" | "movementId" | "cost" >;
 
-export interface TokenMeasureMovementPathWaypoint {
-    /** The top-left x-coordinate in pixels (integer). Default: the previous or source x-coordinate. */
-    x?: number;
-
-    /**
-     * The top-left y-coordinate in pixels (integer).
-     *                                  Default: the previous or source y-coordinate.
-     */
-    y?: number;
-    /**
-     * The elevation in grid units.
-     *                          Default: the previous or source elevation.
-     */
-    elevation?: number;
-    /**
-     * The width in grid spaces (positive).
-     *                              Default: the previous or source width.
-     */
-    width?: number;
-    /**
-     * The height in grid spaces (positive).
-     *                             Default: the previous or source height.
-     */
-    height?: number;
-    /**
-     * The shape type (see {@link CONST.TOKEN_SHAPES}).
-     *                        Default: the previous or source shape.
-     */
-    shape?: TokenShape;
-    /**
-     * The movement action from the previous to this waypoint.
-     *                             Default: `CONFIG.Token.movement.defaultAction`.
-     */
-    action?: string;
-    /**
-     * Teleport from the previous to this waypoint? Default: `false`.
-     */
-    teleport?: boolean;
-    /**
-     * Is the movement from the previous to this waypoint forced?
-     *                      Default: `false`.
-     */
-    forced?: boolean;
-    /**
-     * The terrain data of this segment. Default: `null`.
-     */
-    terrain?: DataModel | null;
-
-    /** A predetermined cost (nonnegative) or cost function to be used instead of `options.cost`. */
-    cost?: number | TokenMovementCostFunction;
-}
-
-export interface TokenMovementSegmentData
+interface TokenMovementSegmentData
     extends Pick<
         TokenMeasuredMovementWaypoint,
         "width" | "height" | "shape" | "action" | "teleport" | "forced" | "terrain"
     > {}
 
-export type TokenMovementCostFunction = GridMeasurePathCostFunction3D<TokenMovementSegmentData>;
-
-export interface TokenGetCompleteMovementPathWaypoint {
+interface TokenGetCompleteMovementPathWaypoint {
     /**
      * The top-left x-coordinate in pixels (integer).
      *                        Default: the previous or prepared x-coordinate.
@@ -244,9 +194,7 @@ export interface TokenGetCompleteMovementPathWaypoint {
     intermediate?: boolean;
 }
 
-export interface TokenCompleteMovementWaypoint extends Omit<TokenMeasuredMovementWaypoint, "userId" | "cost"> {}
-
-export interface TokenFindMovementPathWaypoint {
+interface TokenFindMovementPathWaypoint {
     /**
      * The top-left x-coordinate in pixels (integer).
      *                     Default: the previous or source x-coordinate.
@@ -304,7 +252,7 @@ export interface TokenFindMovementPathWaypoint {
     checkpoint?: boolean;
 }
 
-export interface TokenConstrainMovementPathWaypoint {
+interface TokenConstrainMovementPathWaypoint {
     /**
      * The top-left x-coordinate in pixels (integer).
      * Default: the previous or source x-coordinate.
@@ -367,264 +315,7 @@ export interface TokenConstrainMovementPathWaypoint {
     checkpoint?: boolean;
 }
 
-export interface TokenSegmentizeMovementWaypoint {
-    /**
-     * The x-coordinate in pixels (integer).
-     * Default: the previous or source x-coordinate.
-     */
-    x?: number;
-
-    /**
-     * The y-coordinate in pixels (integer).
-     * Default: the previous or source y-coordinate.
-     */
-    y?: number;
-
-    /**
-     * The elevation in grid units.
-     * Default: the previous or source elevation.
-     */
-    elevation?: number;
-
-    /**
-     * The width in grid spaces (positive).
-     * Default: the previous or source width.
-     */
-    width?: number;
-
-    /**
-     * The height in grid spaces (positive).
-     * Default: the previous or source height.
-     */
-    height?: number;
-
-    /**
-     * The shape type (see {@link CONST.TOKEN_SHAPES}).
-     *              Default: the previous or source shape.
-     */
-    shape?: TokenShape;
-    /**
-     * The movement action from the previous to this waypoint.
-     *                   Default: `CONFIG.Token.movement.defaultAction`.
-     */
-    action?: string;
-    /**
-     * Teleport from the previous to this waypoint? Default: `false`.
-     */
-    teleport?: boolean;
-    /**
-     * Is the movement from the previous to this waypoint forced?
-     *            Default: `false`.
-     */
-    forced?: boolean;
-    /**
-     * The terrain data of this segment. Default: `null`.
-     */
-    terrain?: DataModel | null;
-    /**
-     * Was this waypoint snapped to the grid? Default: `false`.
-     */
-    snapped?: boolean;
-}
-
-export type TokenRegionMovementWaypoint = TokenPosition;
-
-export interface TokenRegionMovementSegment {
-    /**
-     * The type of this segment (see {@link CONST.REGION_MOVEMENT_SEGMENTS}).
-     */
-    type: RegionMovementSegment;
-    /**
-     * The waypoint that this segment starts from.
-     */
-    from: TokenRegionMovementWaypoint;
-    /**
-     * The waypoint that this segment goes to.
-     */
-    to: TokenRegionMovementWaypoint;
-    /**
-     * The movement action between the waypoints.
-     */
-    action: string;
-    /**
-     * Teleport between the waypoints?
-     */
-    teleport: boolean;
-    /**
-     * Is the movement on this segment forced?
-     */
-    forced: boolean;
-    /**
-     * The terrain data of this segment.
-     */
-    terrain: DataModel | null;
-    /**
-     * Is the destination snapped to the grid?
-     */
-    snapped: boolean;
-}
-
-export interface TokenMovementSectionData {
-    /**
-     * The waypoints of the movement path
-     */
-    waypoints: TokenMeasuredMovementWaypoint[];
-    /**
-     * The distance of the movement path
-     */
-    distance: number;
-    /**
-     * The cost of the movement path
-     */
-    cost: number;
-    /**
-     * The number of spaces moved along the path
-     */
-    spaces: number;
-    /**
-     * The number of diagonals moved along the path
-     */
-    diagonals: number;
-}
-
-export interface TokenMovementHistoryData {
-    /**
-     * The recorded waypoints of the movement path
-     */
-    recorded: TokenMovementSectionData;
-    /**
-     * The unrecored waypoints of the movement path
-     */
-    unrecorded: TokenMovementHistoryData;
-    /**
-     * The distance of the combined movement path
-     */
-    distance: number;
-    /**
-     * The cost of the combined movement path
-     */
-    cost: number;
-    /**
-     * The number of spaces moved along the combined path
-     */
-    spaces: number;
-    /**
-     * The number of diagonals moved along the combined path
-     */
-    diagonals: number;
-}
-
-export type TokenMovementMethod = "api" | "config" | "dragging" | "keyboard" | "undo";
-
-export type TokenMovementState = "completed" | "paused" | "pending" | "stopped";
-
-export interface TokenMovementData {
-    /** The ID of the movement */
-    id: string;
-
-    /** The chain of prior movement IDs that this movement is a continuation of */
-    chain: string[];
-
-    /** The origin of movement */
-    origin: TokenPosition;
-
-    /** The destination of movement */
-    destination: TokenPosition;
-
-    /** The waypoints and measurements of the passed path */
-    passed: TokenMovementSectionData;
-
-    /** The waypoints and measurements of the pending path */
-    pending: TokenMovementSectionData;
-
-    /** The waypoints and measurements of the history path */
-    history: TokenMovementHistoryData;
-
-    /** Was the movement recorded in the movement history? */
-    recorded: boolean;
-
-    /** The method of movement */
-    method: TokenMovementMethod;
-
-    /** The options to constrain movement */
-    constrainOptions: Omit<TokenConstrainMovementPathOptions, "preview" | "history">;
-
-    /** Automatically rotate the token in the direction of movement? */
-    autoRotate: boolean;
-
-    /** Show the ruler during the movement animation of the token? */
-    showRuler: boolean;
-
-    /** The user that moved the token */
-    user: User;
-
-    /**
-     * The state of the movement
-     */
-    state: TokenMovementState;
-    /**
-     * The update options of the movement operation
-     */
-    updateOptions: object;
-}
-
-export interface TokenMovementOperation extends Omit<TokenMovementData, "user" | "state" | "updateOptions"> {}
-
-export interface TokenMovementContinuationData {
-    /**
-     * The movement ID
-     */
-    movementId: string;
-    /**
-     * The number of continuations
-     */
-    continueCounter: number;
-    /**
-     * Was continued?
-     */
-    continued: boolean;
-    /**
-     * The continuation promise
-     */
-    continuePromise: Promise<boolean> | null;
-    /**
-     * The promise to wait for before continuing movement
-     */
-    waitPromise: Promise<void>;
-    /**
-     * Resolve function of the wait promise
-     */
-    resolveWaitPromise: () => {} | undefined;
-    /**
-     * The promise that resolves after the update workflow
-     */
-    postWorkflowPromise: Promise<void>;
-    /**
-     * The movement continuation states
-     */
-    states: {
-        [movementId: string]: {
-            handles: Map<string | symbol, TokenMovementContinuationHandle>;
-            callbacks: Array<(continued: boolean) => void>;
-            pending: Set<string>;
-        };
-    };
-}
-
-export interface TokenMovementContinuationHandle {
-    /**
-     * The movement ID
-     */
-    movementId: string;
-    /**
-     * The continuation promise
-     */
-    continuePromise: Promise<boolean> | undefined;
-}
-
-export type TokenResumeMovementCallback = () => Promise<boolean>;
-
-export interface TokenMeasureMovementPathOptions {
+interface TokenMeasureMovementPathOptions {
     /**
      * Measure a preview path?
      * @default false
@@ -632,7 +323,7 @@ export interface TokenMeasureMovementPathOptions {
     preview?: boolean;
 }
 
-export interface TokenConstrainMovementPathOptions {
+interface TokenConstrainMovementPathOptions {
     /**
      * Constrain a preview path? Default: `false`.
      */
@@ -655,7 +346,7 @@ export interface TokenConstrainMovementPathOptions {
     history?: boolean | DeepReadonly<TokenMeasuredMovementWaypoint[]>;
 }
 
-export interface TokenFindMovementPathOptions {
+interface TokenFindMovementPathOptions {
     /**
      * Find a preview path? Default: `false`.
      */
@@ -680,7 +371,7 @@ export interface TokenFindMovementPathOptions {
     delay?: number;
 }
 
-export interface TokenFindMovementPathJob {
+interface TokenFindMovementPathJob {
     /**
      * The result of the pathfinding job. Undefined while the
      * search is in progress, null if the job was cancelled,
@@ -699,11 +390,11 @@ export interface TokenFindMovementPathJob {
     cancel: () => void;
 }
 
-export interface TokenGetTerrainMovementPathWaypoint extends Omit<TokenGetCompleteMovementPathWaypoint, "terrain"> {}
+interface TokenGetTerrainMovementPathWaypoint extends Omit<TokenGetCompleteMovementPathWaypoint, "terrain"> {}
 
-export interface TokenTerrainMovementWaypoint extends Omit<TokenMeasuredMovementWaypoint, "userId" | "cost"> {}
+interface TokenTerrainMovementWaypoint extends Omit<TokenMeasuredMovementWaypoint, "userId" | "cost"> {}
 
-export interface TokenRulerData {
+interface TokenRulerData {
     /** The waypoints that were already passed by the Token */
     passedWaypoints: TokenMeasuredMovementWaypoint[];
 
@@ -714,7 +405,7 @@ export interface TokenRulerData {
     plannedMovement: Record<string, TokenPlannedMovement>;
 }
 
-export interface TokenPlannedMovement {
+interface TokenPlannedMovement {
     /** The found path, which goes through all but the unreachable waypoints */
     foundPath: TokenMeasuredMovementWaypoint[];
 
@@ -737,7 +428,7 @@ export interface TokenPlannedMovement {
     searching: boolean;
 }
 
-export interface TokenRulerWaypointData {
+interface TokenRulerWaypointData {
     /**
      * The index of the waypoint, which is equal to the number of
      * explicit waypoints from the first to this waypoint.
@@ -786,9 +477,9 @@ export interface TokenRulerWaypointData {
     next: TokenRulerWaypoint | null;
 }
 
-export interface TokenRulerWaypoint extends TokenMeasuredMovementWaypoint, TokenRulerWaypointData {}
+interface TokenRulerWaypoint extends TokenMeasuredMovementWaypoint, TokenRulerWaypointData {}
 
-export interface TokenDragContext {
+interface TokenDragContext {
     token: Token;
     clonedToken: Token;
     origin: TokenPosition;
@@ -806,7 +497,7 @@ export interface TokenDragContext {
     searchOptions: TokenFindMovementPathOptions;
 }
 
-export interface TokenAnimationData {
+interface TokenAnimationData {
     /** The x position in pixels */
     x: number;
 
@@ -847,7 +538,7 @@ export interface TokenAnimationData {
     };
 }
 
-export interface TokenAnimationContext {
+interface TokenAnimationContext {
     /** The name of the animation. */
     name: string | symbol;
 
@@ -885,7 +576,7 @@ export interface TokenAnimationContext {
     promise: Promise<void>;
 }
 
-export interface TokenAnimationOptions {
+interface TokenAnimationOptions {
     /** The name of the animation, or null if nameless. Default: {@link Token#animationName}. */
     name?: string | symbol | null;
 
@@ -931,7 +622,7 @@ export interface TokenAnimationOptions {
     ontick?: (elapsedMS: number, animation: CanvasAnimationData, data: TokenAnimationData) => void;
 }
 
-export type TokenMovementActionCostFunction = (
+type TokenMovementActionCostFunction = (
     baseCost: number,
     from: Readonly<GridOffset3D>,
     to: Readonly<GridOffset3D>,
@@ -939,7 +630,7 @@ export type TokenMovementActionCostFunction = (
     segment: DeepReadonly<TokenMovementSegmentData>,
 ) => number;
 
-export interface TokenMovementActionConfig {
+interface TokenMovementActionConfig {
     /** The label of the movement action. */
     label: string;
 
@@ -995,7 +686,7 @@ export interface TokenMovementActionConfig {
     ) => TokenMovementActionCostFunction;
 }
 
-export type TokenAnimationTransition =
+type TokenAnimationTransition =
     | "crosshatch"
     | "dots"
     | "fade"
@@ -1010,12 +701,12 @@ export type TokenAnimationTransition =
     | "wind"
     | "whiteNoise";
 
-export interface RegionSegmentizeMovementPathWaypoint extends ElevatedPoint {
+interface RegionSegmentizeMovementPathWaypoint extends ElevatedPoint {
     /** Teleport from the previous to this waypoint? Default: `false`. */
     teleport?: boolean;
 }
 
-export interface RegionMovementSegment {
+interface RegionMovementSegment {
     /** The type of this segment (see {@link CONST.REGION_MOVEMENT_SEGMENTS}). */
     type: RegionMovementSegment;
     /** The waypoint that this segment starts from. */
@@ -1032,7 +723,7 @@ export interface RegionMovementSegment {
     snapped: boolean;
 }
 
-export interface SceneDimensions {
+interface SceneDimensions {
     /** The width of the canvas. */
     width: number;
     /** The height of the canvas. */
@@ -1067,7 +758,7 @@ export interface SceneDimensions {
     columns: number;
 }
 
-export interface CanvasViewPosition {
+interface CanvasViewPosition {
     /** The x-coordinate which becomes `stage.pivot.x` */
     x: number;
     /** The y-coordinate which becomes `stage.pivot.y` */
@@ -1076,19 +767,19 @@ export interface CanvasViewPosition {
     scale: number;
 }
 
-export interface CanvasVisibilityTest {
+interface CanvasVisibilityTest {
     point: ElevatedPoint;
     los: Map<PointVisionSource<Token | AmbientLight>, boolean>;
 }
 
-export interface CanvasVisibilityTestConfiguration {
+interface CanvasVisibilityTestConfiguration {
     /** The target object */
     object: object | null;
     /** An array of visibility tests */
     tests: CanvasVisibilityTest[];
 }
 
-export interface CanvasVisibilityTextureConfiguration {
+interface CanvasVisibilityTextureConfiguration {
     resolution: number;
     width: number;
     height: number;
@@ -1099,14 +790,14 @@ export interface CanvasVisibilityTextureConfiguration {
     format: number;
 }
 
-export interface TrackedAttributesDescription {
+interface TrackedAttributesDescription {
     /** A list of property path arrays to attributes with both a value and a max property. */
     bar: string[][];
     /** A list of property path arrays to attributes that have only a value property. */
     value: string[][];
 }
 
-export interface ReticuleOptions {
+interface ReticuleOptions {
     /**
      * The amount of margin between the targeting arrows and the token's bounding box, expressed as a fraction of an
      * arrow's size.
@@ -1126,7 +817,7 @@ export interface ReticuleOptions {
     border?: { color?: number; width?: number };
 }
 
-export interface ActivityData {
+interface ActivityData {
     /** The ID of the scene that the user is viewing. */
     sceneId?: string | null;
 
@@ -1149,7 +840,7 @@ export interface ActivityData {
     av?: AVSettingsData;
 }
 
-export interface CanvasPerformanceSettings {
+interface CanvasPerformanceSettings {
     /** The performance mode in CONST.CANVAS_PERFORMANCE_MODES */
     mode: number;
 
@@ -1175,7 +866,7 @@ export interface CanvasPerformanceSettings {
     lightSoftEdges: boolean;
 }
 
-export interface CanvasSupportedComponents {
+interface CanvasSupportedComponents {
     /** Is WebGL2 supported? */
     webGL2: boolean;
 
@@ -1186,7 +877,7 @@ export interface CanvasSupportedComponents {
     offscreenCanvas: boolean;
 }
 
-export interface CanvasDimensions extends SceneDimensions {
+interface CanvasDimensions extends SceneDimensions {
     /** The minimum, maximum, and default canvas scale. */
     scale: { min: number; max: number; default: number };
 
@@ -1198,7 +889,7 @@ export interface CanvasDimensions extends SceneDimensions {
  * The data that is planned to be imported for the adventure, categorized into new documents that will be created and
  * existing documents that will be updated.
  */
-export interface AdventureImportData {
+interface AdventureImportData {
     /** Arrays of document data to create, organized by document name */
     toCreate: Record<string, object[]>;
 
@@ -1213,13 +904,13 @@ export interface AdventureImportData {
  * A callback function that is invoked and awaited during import data preparation before the adventure import proceeds.
  * This can be used to perform custom pre-processing on the import data.
  */
-export type AdventurePreImportCallback = (data: AdventureImportData, options: AdventureImportOptions) => Promise<void>;
+type AdventurePreImportCallback = (data: AdventureImportData, options: AdventureImportOptions) => Promise<void>;
 
 /**
  * Options which customize how the adventure import process is orchestrated.
  * Modules can use the preImportAdventure hook to extend these options by adding preImport or postImport callbacks.
  */
-export interface AdventureImportOptions {
+interface AdventureImportOptions {
     /** Display a warning dialog if existing documents would be overwritten */
     dialog?: boolean;
 
@@ -1236,7 +927,7 @@ export interface AdventureImportOptions {
 /**
  * A report of the world Document instances that were created or updated during the import process.
  */
-export interface AdventureImportResult {
+interface AdventureImportResult {
     /** Documents created as a result of the import, grouped by document name */
     created: Record<string, Document[]>;
 
@@ -1248,50 +939,12 @@ export interface AdventureImportResult {
  * A callback function that is invoked and awaited after import but before the overall import workflow concludes.
  * This can be used to perform additional custom adventure setup steps.
  */
-export type AdventurePostImportCallback = (
+type AdventurePostImportCallback = (
     result: AdventureImportResult,
     options: AdventureImportOptions,
 ) => Promise<void>;
 
-export interface ActiveEffectDuration extends EffectDurationData {
-    /** The duration type, either "seconds", "turns", or "none" */
-    type: string;
-
-    /** The total effect duration, in seconds of world time or as a decimal number with the format {rounds}.{turns} */
-    duration: number | null;
-
-    /** The remaining effect duration, in seconds of world time or as a decimal number with the format rounds.turns */
-    remaining: number | null;
-
-    /** A formatted string label that represents the remaining duration */
-    label: string;
-
-    /** An internal flag used determine when to recompute seconds-based duration */
-    _worldTime?: number;
-
-    /** An internal flag used determine when to recompute turns-based duration */
-    _combatTime?: number;
-}
-
-export interface CombatHistoryData {
-    round: number;
-    turn: number | null;
-    tokenId: string | null;
-    combatantId: string | null;
-}
-
-export interface CombatTurnEventContext {
-    /** The round */
-    round: number;
-    /** The turn */
-    turn: number;
-    /** Was skipped? */
-    skipped: boolean;
-}
-
-export interface CombatRoundEventContext extends Omit<CombatTurnEventContext, "turn"> {}
-
-export interface JournalEntryPageHeading {
+interface JournalEntryPageHeading {
     /** The heading level, 1-6. */
     level: number;
 
@@ -1314,7 +967,7 @@ export interface JournalEntryPageHeading {
 /**
  * An object containing the executed Roll and the produced results
  */
-export interface RollTableDraw {
+interface RollTableDraw {
     /** The Dice roll which generated the draw */
     roll: Roll;
 
@@ -1322,9 +975,9 @@ export interface RollTableDraw {
     results: TableResult[];
 }
 
-export type SearchableField = DataField | { [K in string]: SearchableField };
+type SearchableField = DataField | { [K in string]: SearchableField };
 
-export interface FromCompendiumOptions {
+interface FromCompendiumOptions {
     /** Clear the currently assigned folder. */
     clearFolder?: boolean;
 
@@ -1338,17 +991,58 @@ export interface FromCompendiumOptions {
     keepId?: boolean;
 }
 
-export interface RollTableHTMLEmbedConfig extends DocumentHTMLEmbedConfig {
+interface RollTableHTMLEmbedConfig extends DocumentHTMLEmbedConfig {
     rollable?: boolean;
 }
 
-export type ManageCompendiumRequest = SocketRequest;
-export type ManageCompendiumResponse = SocketResponse;
+type ManageCompendiumRequest = SocketRequest;
+type ManageCompendiumResponse = SocketResponse;
 
-export interface WorldCompendiumPackConfiguration {
+interface WorldCompendiumPackConfiguration {
     folder?: string;
     sort?: number;
     locked?: boolean;
 }
 
-export type WorldCompendiumConfiguration = Record<string, WorldCompendiumPackConfiguration>;
+type WorldCompendiumConfiguration = Record<string, WorldCompendiumPackConfiguration>;
+
+export {
+    ActivityData,
+    CanvasDimensions,
+    CanvasPerformanceSettings,
+    CanvasSupportedComponents,
+    CanvasViewPosition,
+    CanvasVisibilityTest,
+    CanvasVisibilityTestConfiguration,
+    CanvasVisibilityTextureConfiguration,
+    FromCompendiumOptions,
+    HotReloadData,
+    JournalEntryPageHeading,
+    ManageCompendiumRequest,
+    ManageCompendiumResponse,
+    ReticuleOptions,
+    RollTableHTMLEmbedConfig,
+    RulerWaypoint,
+    SearchableField,
+    TokenAnimationContext,
+    TokenAnimationData,
+    TokenAnimationOptions,
+    TokenAnimationTransition,
+    TokenConstrainedMovementWaypoint,
+    TokenConstrainMovementPathOptions,
+    TokenConstrainMovementPathWaypoint,
+    TokenDragContext,
+    TokenFindMovementPathJob,
+    TokenFindMovementPathOptions,
+    TokenFindMovementPathWaypoint,
+    TokenGetTerrainMovementPathWaypoint,
+    TokenMovementActionConfig,
+    TokenMovementActionCostFunction,
+    TokenPlannedMovement,
+    TokenRulerData,
+    TokenRulerWaypoint,
+    TokenRulerWaypointData,
+    TokenTerrainMovementWaypoint,
+    WorldCompendiumConfiguration,
+    WorldCompendiumPackConfiguration,
+};
