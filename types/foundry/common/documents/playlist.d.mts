@@ -15,7 +15,7 @@ export default interface BasePlaylist
         fields.ModelPropsFromSchema<PlaylistSchema> {
     get documentName(): PlaylistMetadata["name"];
 
-    readonly sounds: EmbeddedCollection<any>;
+    readonly sounds: EmbeddedCollection<BasePlaylistSound<BasePlaylist>>;
 }
 
 interface PlaylistMetadata extends DocumentMetadata {
