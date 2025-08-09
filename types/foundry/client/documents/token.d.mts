@@ -42,6 +42,7 @@ import {
     User,
 } from "./_module.mjs";
 import { CanvasDocument, CanvasDocumentStatic } from "./abstract/canvas-document.mjs";
+import { GridMeasurePathResult } from "@common/grid/_types.mjs"
 
 interface CanvasBaseTokenStatic extends Omit<typeof BaseToken, "new">, CanvasDocumentStatic {}
 
