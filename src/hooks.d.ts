@@ -9,7 +9,7 @@ import type { WorldClockSettings } from "@system/settings/world-clock.ts";
 
 declare global {
     namespace Hooks {
-        interface Applications {
+        interface SystemApplications {
             WorldClockSettings: WorldClockSettings;
         }
 
