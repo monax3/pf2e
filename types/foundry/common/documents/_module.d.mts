@@ -18,6 +18,7 @@ export { default as BaseDrawing, DrawingSource } from "./drawing.mjs";
 export { default as BaseFogExploration, FogExplorationSource } from "./fog-exploration.mjs";
 export { default as BaseFolder, FolderSource } from "./folder.mjs";
 export { default as BaseItem, ItemSchema, ItemSource } from "./item.mjs";
+export { default as BaseJournalEntryCategory } from "./journal-entry-category.mjs";
 export { default as BaseJournalEntryPage } from "./journal-entry-page.mjs";
 export { default as BaseJournalEntry, JournalEntrySource } from "./journal-entry.mjs";
 export { default as BaseMacro, MacroSource } from "./macro.mjs";
