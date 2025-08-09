@@ -10,12 +10,14 @@ import ProseMirrorClickHandler from "./click-handler.mjs";
 import ProseMirrorContentLinkPlugin from "./content-link-plugin.mjs";
 import ProseMirrorDirtyPlugin from "./dirty-plugin.mjs";
 import DOMParser from "./dom-parser.mjs";
+import { ProseMirrorDropDown } from "./dropdown.mjs";
 import "./extensions.mjs";
 import ProseMirrorHighlightMatchesPlugin from "./highlight-matches-plugin.mjs";
 import ProseMirrorImagePlugin from "./image-plugin.mjs";
 import ProseMirrorInputRules from "./input-rules.mjs";
 import ProseMirrorKeyMaps from "./keymaps.mjs";
 import ProseMirrorMenu from "./menu.mjs";
+import ProseMirrorPasteTransformer from "./paste-transformer.mjs";
 import ProseMirrorPlugin from "./plugin.mjs";
 import { schema as defaultSchema } from "./schema.mjs";
 import { parseHTMLString, serializeHTMLString } from "./util.mjs";
@@ -66,11 +68,13 @@ export {
     ProseMirrorClickHandler,
     ProseMirrorContentLinkPlugin,
     ProseMirrorDirtyPlugin,
+    ProseMirrorDropDown,
     ProseMirrorHighlightMatchesPlugin,
     ProseMirrorImagePlugin,
     ProseMirrorInputRules,
     ProseMirrorKeyMaps,
     ProseMirrorMenu,
+    ProseMirrorPasteTransformer,
     ProseMirrorPlugin,
     Schema,
     Step,

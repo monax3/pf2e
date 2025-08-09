@@ -3,14 +3,14 @@ import { DOMOutputSpec, Mark, MarkType, Node, NodeType } from "prosemirror-model
 import { EditorState } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
 
-interface ProseMirrorContentLinkOptions {
+export interface ProseMirrorContentLinkOptions {
     /** The parent document housing this editor. */
     document?: Document;
     /** Whether to generate links relative to the parent document. */
     relativeLinks?: boolean;
 }
 
-interface ProseMirrorMenuOptions {
+export interface ProseMirrorMenuOptions {
     /** A function to call when the save button is pressed. */
     onSave?: Function;
     /** Whether this editor instance is intended to be destroyed when saved. */
@@ -19,7 +19,7 @@ interface ProseMirrorMenuOptions {
     compact?: boolean;
 }
 
-interface ProseMirrorMenuItem {
+export interface ProseMirrorMenuItem {
     /** A string identifier for this menu item. */
     action: string;
     /** The description of the menu item. */
@@ -57,7 +57,7 @@ export interface ProseMirrorDropDownEntry extends ProseMirrorMenuItem {
     children?: ProseMirrorDropDownEntry[];
 }
 
-interface ProseMirrorDropDownConfig {
+export interface ProseMirrorDropDownConfig {
     /** The default title of the drop-down. */
     title: string;
     /** The menu CSS class. */
