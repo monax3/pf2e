@@ -1,4 +1,5 @@
 export * from "./_types.mjs";
+export * as types from "./_types.mjs";
 
 export { default as FogManager } from "./fog.mjs";
 export { default as PerceptionManager } from "./perception-manager.mjs";
