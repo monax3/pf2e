@@ -13,7 +13,7 @@ declare const ClientBaseCard: new <TParent extends Cards | null>(
  * @see {@link Cards}                    The Cards document type which contains Card embedded documents
  * @see {@link CardConfig}               The Card configuration application
  */
-export default class Card<TParent extends Cards | null> extends ClientBaseCard<TParent> {
+export default class Card<TParent extends Cards | null = Cards> extends ClientBaseCard<TParent> {
     /** The current card face */
     get currentFace(): CardFaceData | null;
 
