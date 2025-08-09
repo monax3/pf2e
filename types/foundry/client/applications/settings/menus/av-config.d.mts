@@ -43,4 +43,4 @@ export default class AVConfig extends HandlebarsApplicationMixin(ApplicationV2) 
     protected override _onRender(context: ApplicationRenderContext, options: HandlebarsRenderOptions): Promise<void>;
 }
 
-export {};
+export { AVConfigConfiguration };

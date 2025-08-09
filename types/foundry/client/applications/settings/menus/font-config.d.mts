@@ -148,4 +148,4 @@ export default class FontConfig extends HandlebarsApplicationMixin(ApplicationV2
     override close(options?: ApplicationClosingOptions): Promise<this>;
 }
 
-export {};
+export { NewFontDefinition };
