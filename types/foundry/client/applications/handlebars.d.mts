@@ -170,7 +170,7 @@ export function localize(value: string, options: { hash: object }): string;
  */
 export function numberFormat(
     value: number | string,
-    options: { decimals?: number; sign?: boolean },
+    options: { hash: { decimals?: number; sign?: boolean } },
 ): Handlebars.SafeString;
 
 /**
@@ -181,7 +181,7 @@ export function numberFormat(
  * {{numberInput value name="numberField" step=1 min=0 max=10}}
  * ```
  */
-export function numberInput(value: number, options: NumberInputConfig): Handlebars.SafeString;
+export function numberInput(value: number, options: { hash: NumberInputConfig }): Handlebars.SafeString;
 
 /**
  * Create an object from a sequence of `key=value` pairs.
@@ -218,7 +218,7 @@ export function object(options: Handlebars.HelperOptions): Record<string, unknow
 export function radioBoxes(
     name: string,
     choices: object,
-    options: { checked?: string; localize?: boolean },
+    options: { hash: { checked?: string; localize?: boolean } },
 ): Handlebars.SafeString;
 
 export interface SelectOptionsHelperOptions extends SelectInputConfig {
@@ -295,7 +295,7 @@ export interface SelectOptionsHelperOptions extends SelectInputConfig {
  */
 export function selectOptions(
     choices: object | Array<object>,
-    options: SelectOptionsHelperOptions,
+    options: { hash: SelectOptionsHelperOptions },
 ): Handlebars.SafeString;
 
 /**
