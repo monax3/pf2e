@@ -62,6 +62,7 @@ export interface FoundryUI<
     TCombatTracker extends applications.sidebar.tabs.CombatTracker,
     THotbar extends applications.ui.Hotbar<Macro>,
 > {
+    activeWindow: typeof activeWindow;
     actors: TActorDirectory;
     cards: applications.sidebar.tabs.CardsDirectory;
     chat: TChatLog;
