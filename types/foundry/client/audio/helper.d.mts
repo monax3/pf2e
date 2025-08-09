@@ -1,6 +1,7 @@
 import { BandName, ContextName, SoundCreationOptions } from "./_types.mjs";
 import AudioBufferCache from "./cache.mjs";
 import Sound from "./sound.mjs";
+import { AudioFilePath } from "../../common/constants.mjs";
 
 /**
  * A helper class to provide common functionality for working with the Web Audio API.
@@ -105,7 +106,7 @@ export default class AudioHelper {
      * @param src A requested audio source path
      * @returns Does the filename end with a valid audio extension?
      */
-    static hasAudioExtension(src: string): boolean;
+    static hasAudioExtension(src: string): src is AudioFilePath;
 
     /* -------------------------------------------- */
 
