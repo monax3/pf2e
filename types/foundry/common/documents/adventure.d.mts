@@ -112,3 +112,4 @@ type AdventureSchema = {
 };
 
 export type AdventureSource = fields.SourceFromSchema<AdventureSchema>;
+export type AdventureData = fields.ModelPropsFromSchemaWithOptional<AdventureSchema>;

@@ -54,3 +54,4 @@ type FogExplorationSchema = {
 };
 
 export type FogExplorationSource = fields.SourceFromSchema<FogExplorationSchema>;
+export type FogExplorationData = fields.ModelPropsFromSchemaWithOptional<FogExplorationSchema>;

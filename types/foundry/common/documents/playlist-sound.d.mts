@@ -59,3 +59,4 @@ type PlaylistSoundSchema = {
 };
 
 export type PlaylistSoundSource = fields.SourceFromSchema<PlaylistSoundSchema>;
+export type PlaylistSoundData = fields.ModelPropsFromSchemaWithOptional<PlaylistSoundSchema>;

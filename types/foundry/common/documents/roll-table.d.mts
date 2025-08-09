@@ -70,3 +70,4 @@ type RollTableSchema = {
 };
 
 export type RollTableSource = fields.SourceFromSchema<RollTableSchema>;
+export type RollTableData = fields.ModelPropsFromSchemaWithOptional<RollTableSchema>;

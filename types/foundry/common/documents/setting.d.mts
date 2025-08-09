@@ -47,3 +47,4 @@ type SettingSchema = {
 };
 
 export type SettingSource = fields.SourceFromSchema<SettingSchema>;
+export type SettingData = fields.ModelPropsFromSchemaWithOptional<SettingSchema>;

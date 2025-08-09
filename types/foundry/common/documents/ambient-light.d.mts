@@ -46,5 +46,6 @@ export type AmbientLightSchema = {
 };
 
 export type AmbientLightSource = fields.SourceFromSchema<AmbientLightSchema>;
+export type AmbientLightData = fields.ModelPropsFromSchemaWithOptional<AmbientLightSchema>;
 
 export {};

@@ -1,5 +1,7 @@
 import { WorldDocumentType } from "@common/constants.mjs";
 
+export * from "./_types.mjs"; // FIXME
+export * as types from "./_types.mjs"; // FIXME
 export { ActiveEffectSource, default as BaseActiveEffect } from "./active-effect.mjs";
 export { default as BaseActorDelta } from "./actor-delta.mjs";
 export { ActorSource, default as BaseActor } from "./actor.mjs";

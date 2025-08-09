@@ -368,6 +368,7 @@ type PrototypeTokenSchema = Omit<
 };
 
 export type PrototypeTokenSource = fields.SourceFromSchema<PrototypeTokenSchema>;
+export type PrototypeTokenData = fields.ModelPropsFromSchemaWithOptional<PrototypeTokenSchema>;
 
 /**
  * A minimal data model used to represent a tombstone entry inside an {@link EmbeddedCollectionDelta}.

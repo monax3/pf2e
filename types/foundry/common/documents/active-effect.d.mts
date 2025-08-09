@@ -99,6 +99,7 @@ type EffectDurationSchema = {
 };
 
 export type ActiveEffectSource = fields.SourceFromSchema<ActiveEffectSchema>;
+export type ActiveEffectData = fields.ModelPropsFromSchemaWithOptional<ActiveEffectSchema>;
 
 export type EffectChangeData = fields.SourceFromSchema<EffectChangeSchema>;
 export type EffectDurationSource = fields.SourceFromSchema<EffectDurationSchema>;

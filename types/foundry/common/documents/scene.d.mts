@@ -177,6 +177,8 @@ type GridDataSchema = {
     units: fields.StringField<string, string, true, false, true>;
 };
 
+export type GridData = fields.ModelPropsFromSchemaWithOptional<GridDataSchema>;
+
 type FogSchema = {
     exploration: fields.BooleanField;
     reset: fields.NumberField;

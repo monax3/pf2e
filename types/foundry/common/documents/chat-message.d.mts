@@ -105,5 +105,6 @@ export interface ChatMessageCreateCallbackOptions extends DatabaseCreateCallback
 }
 
 export type ChatMessageSource = fields.SourceFromSchema<ChatMessageSchema>;
+export type ChatMessageData = fields.ModelPropsFromSchemaWithOptional<ChatMessageSchema>;
 
 export {};
