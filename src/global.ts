@@ -6,7 +6,6 @@ import type { AutomaticBonusProgression as ABP } from "@actor/character/automati
 import type { ElementalBlast } from "@actor/character/elemental-blast.ts";
 import type { FeatGroupData } from "@actor/character/feats/index.ts";
 import type { CheckModifier, Modifier, ModifierType, StatisticModifier } from "@actor/modifiers.ts";
-import type { SettingConfig } from "@client/_types.d.mts";
 import type Hotbar from "@client/applications/ui/hotbar.d.mts";
 import type Config from "@client/config.d.mts";
 import type WallDocument from "@client/documents/wall.d.mts";
@@ -344,12 +343,6 @@ declare global {
             lte: (a: number, b: number) => boolean;
             ne: (a: number, b: number) => boolean;
             ternary: (condition: boolean | number, ifTrue: number, ifFalse: number) => number;
-        }
-    }
-
-    namespace foundry {
-        interface ClientSettingsMap {
-            get(key: "pf2e.worldClock"): SettingConfig & { default: WorldClockSettingData };
         }
     }
 
