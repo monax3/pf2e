@@ -305,7 +305,7 @@ export class StatusEffects {
 
         const templatePath = "systems/pf2e/templates/chat/participant-conditions.hbs";
         const content = await fa.handlebars.renderTemplate(templatePath, { conditions });
-        const messageSource: Partial<foundry.documents.ChatMessageSource> = {
+        const messageSource: DeepPartial<foundry.documents.ChatMessageSource> = {
             author: game.user.id,
             speaker: ChatMessagePF2e.getSpeaker({ token }),
             content,
