@@ -1,4 +1,5 @@
 export * from "./_types.mjs";
+export * as types from "./_types.mjs";
 export * as edges from "./edges/_module.mjs";
 
 export { default as ClockwiseSweepPolygon } from "./clockwise-sweep.mjs";

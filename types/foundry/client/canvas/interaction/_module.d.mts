@@ -1,4 +1,5 @@
 export * from "./_types.mjs";
+export * as types from "./_types.mjs";
 
 export { default as MouseInteractionManager } from "./mouse-handler.mjs";
 export { default as RenderFlags } from "./render-flags.mjs";
