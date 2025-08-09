@@ -74,4 +74,4 @@ export default class SupportDetails extends HandlebarsApplicationMixin(Applicati
     static getWebGLRendererInfo(gl: WebGLRenderingContext): string;
 }
 
-export {};
+export { SupportReportData };
