@@ -12,6 +12,7 @@ import { ClientDocument } from "@client/documents/abstract/client-document.mjs";
 import { CompendiumIndexData } from "@client/documents/collections/compendium-collection.mjs";
 import Document from "@common/abstract/document.mjs";
 import { COMPENDIUM_DOCUMENT_TYPES } from "@common/constants.mjs";
+import { DocumentClasses } from "@client/helpers/hooks.mjs";
 
 /**
  * Clean a provided HTML fragment, closing unbalanced tags and stripping some undesirable properties
@@ -86,7 +87,7 @@ export function fromUuidSync<
  * @param documentName The canonical Document name, for example "Actor"
  * @returns The configured Document class implementation
  */
-export function getDocumentClass(documentName: string): typeof Document | undefined;
+export function getDocumentClass<K extends keyof DocumentClasses>(documentName: K): DocumentClasses[K];
 
 /**
  * Given a source object to sort, a target to sort relative to, and an Array of siblings in the container:
