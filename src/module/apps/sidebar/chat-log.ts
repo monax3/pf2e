@@ -18,7 +18,7 @@ import { createHTMLElement, ErrorPF2e, fontAwesomeIcon, htmlClosest, htmlQuery, 
 import * as R from "remeda";
 
 class ChatLogPF2e extends fa.sidebar.tabs.ChatLog {
-    static override DEFAULT_OPTIONS = {
+    static override DEFAULT_OPTIONS: { actions: Record<string, fa.ApplicationClickAction> } = {
         actions: {
             activate: ChatLogPF2e.#onClickActivate,
             applyDamage: ChatLogPF2e.#onClickApplyDamage,
@@ -29,7 +29,7 @@ class ChatLogPF2e extends fa.sidebar.tabs.ChatLog {
             recoverPersistentDamage: ChatLogPF2e.#onClickRecoverPersistent,
             setAsInitiative: ChatLogPF2e.#onClickSetAsInitiative,
             shieldBlock: ChatLogPF2e.#onClickShieldBlock,
-        } satisfies Record<string, fa.ApplicationClickAction>,
+        },
     };
 
     /* -------------------------------------------- */
