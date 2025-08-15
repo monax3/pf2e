@@ -44,10 +44,10 @@ export function readTextFromFile(file: File): Promise<string>;
  * @param options.invalid Allow retrieving an invalid Document.
  * @returns Returns the Document if it could be found, otherwise null.
  */
+export function fromUuid(uuid: ActorUUID, relative?: Maybe<ClientDocument>): Promise<Hooks.Documents['Actor'] | null>;
+export function fromUuid(uuid: ItemUUID, relative?: Maybe<ClientDocument>): Promise<Hooks.Documents['Item'] | null>;
+export function fromUuid(uuid: TokenDocumentUUID, relative?: Maybe<ClientDocument>): Promise<Hooks.Documents['Token'] | null>;
 export function fromUuid(uuid: CompendiumUUID, relative?: Maybe<ClientDocument>): Promise<CompendiumDocument | null>;
-export function fromUuid(uuid: ActorUUID, relative?: Maybe<ClientDocument>): Promise<Actor | null>;
-export function fromUuid(uuid: ItemUUID, relative?: Maybe<ClientDocument>): Promise<Item | null>;
-export function fromUuid(uuid: TokenDocumentUUID, relative?: Maybe<ClientDocument>): Promise<TokenDocument | null>;
 export function fromUuid<TDocument extends ClientDocument>(
     uuid: string,
     relative?: Maybe<ClientDocument>,
