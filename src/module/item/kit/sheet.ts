@@ -1,3 +1,4 @@
+import { ItemPF2e } from "@item";
 import { ItemSheetDataPF2e, ItemSheetOptions, ItemSheetPF2e } from "@item/base/sheet/sheet.ts";
 import { Coins, PhysicalItemPF2e } from "@item/physical/index.ts";
 import { htmlClosest, htmlQueryAll } from "@util";
@@ -28,7 +29,7 @@ class KitSheetPF2e extends ItemSheetPF2e<KitPF2e> {
         const dragData = event.dataTransfer?.getData("text/plain");
         const dragItem = JSON.parse(dragData ?? "");
         if (dragItem.type !== "Item") return;
-        const item = await fromUuid(dragItem.uuid ?? "");
+        const item = await fromUuid<ItemPF2e>(dragItem.uuid ?? "");
         if (!(item instanceof PhysicalItemPF2e || item instanceof KitPF2e)) return;
 
         const containerId = htmlClosest(event.target, "[data-container-id]")?.dataset.containerId;
