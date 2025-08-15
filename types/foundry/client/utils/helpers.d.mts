@@ -12,7 +12,7 @@ import { ClientDocument } from "@client/documents/abstract/client-document.mjs";
 import { CompendiumIndexData } from "@client/documents/collections/compendium-collection.mjs";
 import Document from "@common/abstract/document.mjs";
 import { COMPENDIUM_DOCUMENT_TYPES } from "@common/constants.mjs";
-import { DocumentClasses } from "@client/helpers/hooks.mjs";
+import { Documents, DocumentClasses } from "@client/helpers/hooks.mjs";
 
 /**
  * Clean a provided HTML fragment, closing unbalanced tags and stripping some undesirable properties
@@ -45,10 +45,10 @@ export function readTextFromFile(file: File): Promise<string>;
  * @param options.invalid Allow retrieving an invalid Document.
  * @returns Returns the Document if it could be found, otherwise null.
  */
+export function fromUuid(uuid: ActorUUID, relative?: Maybe<ClientDocument>): Promise<Documents['Actor'] | null>;
+export function fromUuid(uuid: ItemUUID, relative?: Maybe<ClientDocument>): Promise<Documents['Item'] | null>;
+export function fromUuid(uuid: TokenDocumentUUID, relative?: Maybe<ClientDocument>): Promise<Documents['Token'] | null>;
 export function fromUuid(uuid: CompendiumUUID, relative?: Maybe<ClientDocument>): Promise<CompendiumDocument | null>;
-export function fromUuid(uuid: ActorUUID, relative?: Maybe<ClientDocument>): Promise<Actor | null>;
-export function fromUuid(uuid: ItemUUID, relative?: Maybe<ClientDocument>): Promise<Item | null>;
-export function fromUuid(uuid: TokenDocumentUUID, relative?: Maybe<ClientDocument>): Promise<TokenDocument | null>;
 export function fromUuid<TDocument extends ClientDocument>(
     uuid: string,
     relative?: Maybe<ClientDocument>,

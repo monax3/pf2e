@@ -3,6 +3,7 @@ import { CoinsPF2e, PhysicalItemPF2e } from "@item/physical/index.ts";
 import { htmlClosest, htmlQueryAll } from "@util";
 import { KitEntryData } from "./data.ts";
 import { KitPF2e } from "./document.ts";
+import type { ItemPF2e } from "@item";
 
 class KitSheetPF2e extends ItemSheetPF2e<KitPF2e> {
     static override get defaultOptions(): ItemSheetOptions {
@@ -28,7 +29,7 @@ class KitSheetPF2e extends ItemSheetPF2e<KitPF2e> {
         const dragData = event.dataTransfer?.getData("text/plain");
         const dragItem = JSON.parse(dragData ?? "");
         if (dragItem.type !== "Item") return;
-        const item = await fromUuid(dragItem.uuid ?? "");
+        const item = await fromUuid<ItemPF2e>(dragItem.uuid ?? "");
         if (!(item instanceof PhysicalItemPF2e || item instanceof KitPF2e)) return;
 
         const containerId = htmlClosest(event.target, "[data-container-id]")?.dataset.containerId;
