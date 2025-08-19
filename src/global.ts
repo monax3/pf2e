@@ -311,11 +311,11 @@ declare global {
         PF2E: typeof PF2ECONFIG;
     }
 
-    const CONFIG: ConfigPF2e;
-    const canvas: CanvasPF2e;
+    var CONFIG: ConfigPF2e;
+    var canvas: CanvasPF2e;
 
     namespace globalThis {
-        const game: GamePF2e;
+        var game: GamePF2e;
         export import fa = foundry.applications;
         export import fav1 = foundry.appv1;
         export import fc = foundry.canvas;
@@ -323,7 +323,7 @@ declare global {
         export import fh = foundry.helpers;
         export import fu = foundry.utils;
 
-        const ui: FoundryUI<
+        var ui: FoundryUI<
             ActorDirectoryPF2e,
             ItemDirectoryPF2e,
             ChatLogPF2e,
