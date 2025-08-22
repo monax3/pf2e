@@ -9,7 +9,7 @@ export { default as BaseAmbientLight } from "./ambient-light.mjs";
 export { AmbientSoundSource, default as BaseAmbientSound } from "./ambient-sound.mjs";
 export { default as BaseCard, CardFaceData } from "./card.mjs";
 export { default as BaseCards } from "./cards.mjs";
-export { default as BaseChatMessage, ChatMessageFlags, ChatMessageSource, ChatSpeakerData } from "./chat-message.mjs";
+export { default as BaseChatMessage, ChatMessageFlagData, ChatMessageFlags, ChatMessageSource, ChatSpeakerData } from "./chat-message.mjs";
 export { default as BaseCombat, CombatSource } from "./combat.mjs";
 export { default as BaseCombatantGroup } from "./combatant-group.mjs";
 export { default as BaseCombatant, CombatantSource } from "./combatant.mjs";
