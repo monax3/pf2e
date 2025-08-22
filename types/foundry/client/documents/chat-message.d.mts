@@ -8,7 +8,7 @@ import {
 } from "@common/abstract/_types.mjs";
 import Document from "@common/abstract/document.mjs";
 import { RollMode } from "@common/constants.mjs";
-import BaseChatMessage, { ChatMessageSource, ChatSpeakerData } from "@common/documents/chat-message.mjs";
+import BaseChatMessage, { ChatMessageFlags, ChatMessageSource, ChatSpeakerData } from "@common/documents/chat-message.mjs";
 import { Actor, BaseUser, Scene, TokenDocument, User } from "./_module.mjs";
 import { ClientDocument, ClientDocumentStatic } from "./abstract/client-document.mjs";
 
@@ -23,6 +23,8 @@ declare const ClientBaseChatMessage: {
  * Each ChatMessage document contains ChatMessageData which defines its data schema.
  */
 declare class ChatMessage<TUser extends User | null = User | null> extends ClientBaseChatMessage<TUser> {
+    flags: ChatMessageFlags;
+
     rolls: Rolled<Roll>[];
 
     /** Is this ChatMessage currently displayed in the sidebar ChatLog? */
