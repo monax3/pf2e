@@ -154,6 +154,115 @@ interface ClientSettingsPF2e extends fh.ClientSettings {
     get(module: string, key: string): unknown;
 }
 
+interface PF2e {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+    actions: Record<string, Function> & Collection<string, Action>;
+    compendiumBrowser: CompendiumBrowser;
+    worldClock: WorldClock;
+    effectPanel: EffectsPanel;
+    effectTracker: EffectTracker;
+    rollActionMacro: typeof rollActionMacro;
+    rollItemMacro: typeof rollItemMacro;
+    gm: {
+        calculateXP: typeof calculateXP;
+        checkPrompt: typeof checkPrompt;
+        editPersistent: typeof editPersistent;
+        launchTravelSheet: typeof launchTravelSheet;
+        perceptionForSelected: typeof perceptionForSelected;
+        stealthForSelected: typeof stealthForSelected;
+        xpFromEncounter: typeof xpFromEncounter;
+    };
+    system: {
+        moduleArt: ModuleArt;
+        remigrate: typeof remigrate;
+        sluggify: typeof sluggify;
+        generateItemName: (item: PhysicalItemPF2e) => string;
+    };
+    variantRules: {
+        AutomaticBonusProgression: typeof AutomaticBonusProgression;
+    };
+    Check: typeof CheckPF2e;
+    CheckModifier: typeof CheckModifier;
+    Coins: typeof CoinsPF2e;
+    ConditionManager: typeof ConditionManager;
+    Dice: typeof DicePF2e;
+    ElementalBlast: typeof ElementalBlast;
+    Modifier: typeof ModifierPF2e;
+    ModifierType: { [K in Uppercase<ModifierType>]: Lowercase<K> };
+    Predicate: typeof Predicate;
+    RuleElement: typeof RuleElementPF2e;
+    RuleElements: typeof RuleElements;
+    StatisticModifier: typeof StatisticModifier;
+    StatusEffects: typeof StatusEffects;
+    TextEditor: typeof TextEditorPF2e;
+    /** Cached values of frequently-checked settings */
+    settings: {
+        automation: {
+            /** Flanking detection */
+            flanking: boolean;
+            reachEnforcement: Set<"doors" | "corpses" | "loot" | "merchants">;
+            removeEffects: boolean;
+        };
+        /** Campaign feat slots */
+        campaign: {
+            feats: {
+                enabled: boolean;
+                sections: FeatGroupData[];
+            };
+            languages: LanguageSettings;
+            mythic: "disabled" | "enabled" | "variant-tiers";
+            type: string | null;
+        };
+        critFumble: {
+            buttons: boolean;
+            cards: boolean;
+        };
+        /** Encumbrance automation */
+        encumbrance: boolean;
+        gmVision: boolean;
+        /** Immunities, weaknesses, and resistances */
+        iwr: boolean;
+        metagame: {
+            breakdowns: boolean;
+            dcs: boolean;
+            secretChecks: boolean;
+            partyStats: boolean;
+            partyVision: boolean;
+            results: boolean;
+        };
+        /** Rules-based vision */
+        rbv: boolean;
+        tokens: {
+            /** Automatic scaling of tokens belong to small actor */
+            autoscale: boolean;
+            /** Token nameplate visibility sets name visibility in encounter tracker */
+            nameVisibility: boolean;
+            /** Nath Mode */
+            nathMode: boolean;
+        };
+        /** Theater-of-the-mind toggles */
+        totm: boolean;
+        /** Variant urles */
+        variants: {
+            /** Automatic Bonus Progression */
+            abp: "noABP" | "ABPFundamentalPotency" | "ABPRulesAsWritten";
+            /** Free Archetype */
+            fa: boolean;
+            /** Gradual Ability Boosts */
+            gab: boolean;
+            /** Proficiency without Level */
+            pwol: {
+                enabled: boolean;
+                /** Modifiers for each proficiency rank */
+                modifiers: [number, number, number, number, number];
+            };
+            /** Stamina */
+            stamina: boolean;
+        };
+        worldClock: WorldClockSettingData;
+    };
+}
+
 interface GamePF2e
     extends Game<
         ActorPF2e<null>,
@@ -165,114 +274,7 @@ interface GamePF2e
         ScenePF2e,
         UserPF2e
     > {
-    pf2e: {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-        actions: Record<string, Function> & Collection<string, Action>;
-        compendiumBrowser: CompendiumBrowser;
-        worldClock: WorldClock;
-        effectPanel: EffectsPanel;
-        effectTracker: EffectTracker;
-        rollActionMacro: typeof rollActionMacro;
-        rollItemMacro: typeof rollItemMacro;
-        gm: {
-            calculateXP: typeof calculateXP;
-            checkPrompt: typeof checkPrompt;
-            editPersistent: typeof editPersistent;
-            launchTravelSheet: typeof launchTravelSheet;
-            perceptionForSelected: typeof perceptionForSelected;
-            stealthForSelected: typeof stealthForSelected;
-            xpFromEncounter: typeof xpFromEncounter;
-        };
-        system: {
-            moduleArt: ModuleArt;
-            remigrate: typeof remigrate;
-            sluggify: typeof sluggify;
-            generateItemName: (item: PhysicalItemPF2e) => string;
-        };
-        variantRules: {
-            AutomaticBonusProgression: typeof AutomaticBonusProgression;
-        };
-        Check: typeof CheckPF2e;
-        CheckModifier: typeof CheckModifier;
-        Coins: typeof CoinsPF2e;
-        ConditionManager: typeof ConditionManager;
-        Dice: typeof DicePF2e;
-        ElementalBlast: typeof ElementalBlast;
-        Modifier: typeof ModifierPF2e;
-        ModifierType: { [K in Uppercase<ModifierType>]: Lowercase<K> };
-        Predicate: typeof Predicate;
-        RuleElement: typeof RuleElementPF2e;
-        RuleElements: typeof RuleElements;
-        StatisticModifier: typeof StatisticModifier;
-        StatusEffects: typeof StatusEffects;
-        TextEditor: typeof TextEditorPF2e;
-        /** Cached values of frequently-checked settings */
-        settings: {
-            automation: {
-                /** Flanking detection */
-                flanking: boolean;
-                reachEnforcement: Set<"doors" | "corpses" | "loot" | "merchants">;
-                removeEffects: boolean;
-            };
-            /** Campaign feat slots */
-            campaign: {
-                feats: {
-                    enabled: boolean;
-                    sections: FeatGroupData[];
-                };
-                languages: LanguageSettings;
-                mythic: "disabled" | "enabled" | "variant-tiers";
-                type: string | null;
-            };
-            critFumble: {
-                buttons: boolean;
-                cards: boolean;
-            };
-            /** Encumbrance automation */
-            encumbrance: boolean;
-            gmVision: boolean;
-            /** Immunities, weaknesses, and resistances */
-            iwr: boolean;
-            metagame: {
-                breakdowns: boolean;
-                dcs: boolean;
-                secretChecks: boolean;
-                partyStats: boolean;
-                partyVision: boolean;
-                results: boolean;
-            };
-            /** Rules-based vision */
-            rbv: boolean;
-            tokens: {
-                /** Automatic scaling of tokens belong to small actor */
-                autoscale: boolean;
-                /** Token nameplate visibility sets name visibility in encounter tracker */
-                nameVisibility: boolean;
-                /** Nath Mode */
-                nathMode: boolean;
-            };
-            /** Theater-of-the-mind toggles */
-            totm: boolean;
-            /** Variant urles */
-            variants: {
-                /** Automatic Bonus Progression */
-                abp: "noABP" | "ABPFundamentalPotency" | "ABPRulesAsWritten";
-                /** Free Archetype */
-                fa: boolean;
-                /** Gradual Ability Boosts */
-                gab: boolean;
-                /** Proficiency without Level */
-                pwol: {
-                    enabled: boolean;
-                    /** Modifiers for each proficiency rank */
-                    modifiers: [number, number, number, number, number];
-                };
-                /** Stamina */
-                stamina: boolean;
-            };
-            worldClock: WorldClockSettingData;
-        };
-    };
+    pf2e: PF2e;
     settings: ClientSettingsPF2e;
 }
 
@@ -362,4 +364,4 @@ declare global {
     const UUID_REDIRECTS: Record<CompendiumUUID, CompendiumUUID>;
 }
 
-export type { ClientSettingsPF2e, GamePF2e };
+export type { ClientSettingsPF2e, GamePF2e, PF2e };

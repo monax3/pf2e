@@ -67,13 +67,13 @@ declare type ChatMessageSchema = {
     _stats: fields.DocumentStatsField;
 };
 
-export type ChatMessageFlags = DocumentFlags & {
-    core?: {
+export interface ChatMessageFlags extends DocumentFlags {
+    core: {
         canPopout?: boolean;
         initiativeRoll?: boolean;
         RollTable?: string;
     };
-};
+}
 
 declare type ChatSpeakerSchema = {
     /** The _id of the Scene where this message was created */
