@@ -51,6 +51,7 @@ export { AVSettingsData } from "./av/settings.mjs";
 export { ChatBubbleOptions } from "./canvas/animation/chat-bubbles.mjs";
 export { DoorAnimationConfiguration, DoorStateSnapshot, DoorStyle } from "./canvas/containers/elements/door-mesh.mjs";
 export { PolygonVertexOptions } from "./canvas/geometry/edges/vertex.mjs";
+export { CanvasEnvironmentConfig } from "./canvas/groups/environment.mjs";
 export { WeatherOcclusionMaskConfiguration, WeatherTerrainMaskConfiguration } from "./canvas/layers/effects/weather-effects.mjs";
 export { TextureAlphaData } from "./canvas/loader.mjs";
 export { TurnMarkerAnimationConfigData, TurnMarkerAnimationData } from "./canvas/placeables/tokens/turn-marker-data.mjs";
@@ -63,7 +64,6 @@ export { PointEffectSourceData } from "./canvas/sources/point-effect-source.mjs"
 export { VisionSourceData } from "./canvas/sources/point-vision-source.mjs";
 export { RenderedEffectLayerConfig, RenderedEffectSourceData, RenderedEffectSourceLayer } from "./canvas/sources/rendered-effect-source.mjs";
 export { TextureBase64ExtractionOptions, TexturePixelsExtractionOptions } from "./canvas/texture-extractor.mjs";
-export { CanvasEnvironmentConfig } from "./helpers/hooks.mjs";
 export { WorkerTask } from "./helpers/workers.mjs";
 export { TourConfig, TourStatus, TourStep } from "./nue/tour.mjs";
 export { DialogButton as DialogV1Button, DialogOptions as DialogV1Options, ConfirmDialogParameters as DialogV1ConfirmOptions } from "./appv1/api/dialog-v1.mjs";

@@ -110,7 +110,7 @@ type SceneSchema = {
     fog: fields.SchemaField<FogSchema>;
 
     // Environment Configuration
-    environment: fields.SchemaField<EnvironmentSchema>;
+    environment: fields.SchemaField<SceneEnvironmentSchema>;
 
     // Embedded Collections
 
@@ -189,36 +189,41 @@ type FogSchema = {
     }>;
 };
 
-type EnvironmentSchema = {
-    darknessLevel: fields.AlphaField;
-    darknessLock: fields.BooleanField;
-    /** Is a global source of illumination present which provides dim light to all areas of the Scene? */
-    globalLight: fields.SchemaField<{
-        enabled: fields.BooleanField;
-        alpha: data.LightDataSchema["alpha"];
-        bright: fields.BooleanField;
-        color: data.LightDataSchema["color"];
-        coloration: data.LightDataSchema["coloration"];
-        luminosity: data.LightDataSchema["luminosity"];
-        saturation: data.LightDataSchema["saturation"];
-        contrast: data.LightDataSchema["contrast"];
-        shadows: data.LightDataSchema["shadows"];
-        darkness: data.LightDataSchema["darkness"];
-    }>;
-    cycle: fields.BooleanField;
-    base: fields.SchemaField<EnvironmentDataSchema>;
-    dark: fields.SchemaField<EnvironmentDataSchema>;
-};
+type GlobalLightSchema = Pick<data.LightDataSchema,
+    | "alpha"
+    | "color"
+    | "coloration"
+    | "contrast"
+    | "luminosity"
+    | "saturation"
+    | "shadows"
+    | "darkness"> & {
+    enabled: fields.BooleanField<boolean, boolean>;
+    bright: fields.BooleanField<boolean, boolean>;
+}
+
+export type GlobalLightData = fields.ModelPropsFromSchema<GlobalLightSchema>;
 
 type EnvironmentDataSchema = {
     hue: fields.HueField;
     intensity: fields.AlphaField;
-    luminosity: fields.NumberField<number, number, true>;
-    saturation: fields.NumberField<number, number, true>;
-    shadows: fields.NumberField<number, number, true>;
+    luminosity: fields.NumberField;
+    saturation: fields.NumberField;
+    shadows: fields.NumberField;
+};
+
+type SceneEnvironmentSchema = {
+    base: fields.SchemaField<EnvironmentDataSchema>;
+    cycle: fields.BooleanField;
+    dark: fields.SchemaField<EnvironmentDataSchema>;
+    darknessLevel: fields.AlphaField;
+    darknessLevelLock: fields.BooleanField;
+    /** Is a global source of illumination present which provides dim light to all areas of the Scene? */
+    globalLight: fields.DefaultSchemaField<GlobalLightSchema>;
 };
 
 export type SceneSource = fields.SourceFromSchema<SceneSchema>;
+export type SceneData = fields.ModelPropsFromSchema<SceneSchema>;
 
 declare global {
     export type SceneEmbeddedOperation<TParent extends BaseScene> = DatabaseOperation<TParent> & {
@@ -235,6 +240,9 @@ declare global {
         size: number;
         width: number;
     }
-
-    export type EnvironmentDataSource = fields.SourceFromSchema<EnvironmentSchema>;
 }
+
+export type EnvironmentDataSource = fields.SourceFromSchema<EnvironmentDataSchema>;
+export type EnvironmentData = fields.ModelPropsFromSchemaWithOptional<EnvironmentDataSchema>;
+export type SceneEnvironmentSource = fields.SourceFromSchema<SceneEnvironmentSchema>;
+export type SceneEnvironmentData = fields.ModelPropsFromSchema<SceneEnvironmentSchema>;
