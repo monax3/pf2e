@@ -73,7 +73,7 @@ export default class BaseToken<TParent extends BaseScene | null = BaseScene | nu
 
 export default interface BaseToken<TParent extends BaseScene | null = BaseScene | null>
     extends Document<TParent, TokenSchema>,
-        fields.ModelPropsFromSchema<TokenSchema> {
+        fields.ModelPropsFromSchemaWithOptional<TokenSchema> {
     delta: BaseActorDelta<this> | null;
     light: data.LightData<this>;
 }
@@ -88,6 +88,21 @@ interface TokenMetadata extends DocumentMetadata {
         ActorDelta: "delta";
     };
 }
+
+type TokenRingSchema = {
+    enabled: fields.BooleanField<boolean, boolean, false, false, false>;
+    colors: fields.DefaultSchemaField<{
+        ring: fields.ColorField<false, true, false>;
+        background: fields.ColorField<false, true, false>;
+    }, false, false, false>;
+    effects: fields.NumberField<number, number, false, false, false>;
+    subject: fields.SchemaField<{
+        scale: fields.NumberField<number, number, false, false, false>;
+        texture: fields.FilePathField<CONST.FilePath, ImageFilePath, false, false, false>;
+    }>;
+};
+
+export type TokenRingData = fields.ModelPropsFromSchemaWithOptional<TokenRingSchema>;
 
 type TokenSchema = {
     /** The Token _id which uniquely identifies it within its parent Scene */
@@ -185,18 +200,7 @@ type TokenSchema = {
     occludable: fields.SchemaField<{
         radius: fields.NumberField<number, number, false, false>;
     }>;
-    ring: fields.SchemaField<{
-        enabled: fields.BooleanField;
-        colors: fields.SchemaField<{
-            ring: fields.ColorField;
-            background: fields.ColorField;
-        }>;
-        effects: fields.NumberField<number, number, true, false, true>;
-        subject: fields.SchemaField<{
-            scale: fields.NumberField;
-            texture: fields.FilePathField<ImageFilePath>;
-        }>;
-    }>;
+    ring: fields.SchemaField<TokenRingSchema>;
     turnMarker: fields.SchemaField<{
         mode: fields.NumberField<number, number, true, true, true>;
         animation: fields.StringField<string, string, true, true, true>;
@@ -204,12 +208,13 @@ type TokenSchema = {
         disposition: fields.BooleanField;
     }>;
     movementAction: fields.StringField<string, string, true, true, true>;
-
     /** An object of optional key/value flags */
     flags: fields.DocumentFlagsField;
 };
 
 export type TokenSource = fields.SourceFromSchema<TokenSchema>;
+
+export type TokenData = fields.ModelPropsFromSchemaWithOptional<TokenSchema>;
 
 export class ActorDeltaField<
     TDocument extends BaseActorDelta<BaseToken> = BaseActorDelta<BaseToken>,
