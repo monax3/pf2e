@@ -1,3 +1,4 @@
+import { RegionEventType } from "@common/constants.mjs";
 import { RegionPolygonTree } from "@client/data/region-shapes/polygon-tree.mjs";
 import { RegionShape } from "@client/data/region-shapes/shape.mjs";
 import EmbeddedCollection from "@common/abstract/embedded-collection.mjs";
@@ -144,13 +145,13 @@ export type RegionEvent<TDocument extends RegionDocument = RegionDocument, TUser
     | TokenMoveRegionEvent<TDocument, TUser>
     | TokenBasicMoveRegionEvent<TDocument, TUser>;
 
-export interface SocketRegionEvent<TData extends object = object> {
+export interface RegionSocketEvent<TData extends object = object> {
     /** The UUID of the Region the event was triggered on */
     regionUuid: string;
     /** The ID of the User that triggered the event */
     userId: string;
     /** The name of the event */
-    eventName: string;
+    eventName: RegionEventType;
     /** The data of the event */
     eventData: TData;
     /** The keys of the event data that are Documents */
