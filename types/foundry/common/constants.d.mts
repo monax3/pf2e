@@ -2161,6 +2161,8 @@ export const REGION_EVENTS: Readonly<{
     TOKEN_ROUND_END: "tokenRoundEnd";
 }>;
 
+export type RegionEventType = (typeof REGION_EVENTS)[keyof typeof REGION_EVENTS];
+
 /**
  * The possible visibility state of Region.
  */

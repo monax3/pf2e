@@ -1,7 +1,7 @@
 export * from "@common/documents/_types.mjs";
 export { TokenDetectionMode } from "@client/canvas/perception/detection-mode.mjs";
 export { AmbientSoundEffect } from "@client/canvas/layers/sounds.mjs";
-import GlobalLightSource from "@client/canvas/sources/global-light-source.mjs";
+export { RegionSocketEvent } from "./region.mjs";
 
 import { TokenConstrainMovementPathOptions, TokenMovementActionConfig } from "@client/_types.mjs";
 import { TerrainData } from "@client/data/terrain-data.mjs";
@@ -761,7 +761,3 @@ export interface TokenMovementContinuationHandle {
 }
 
 export type TokenResumeMovementCallback = () => Promise<boolean>;
-
-export {
-    GlobalLightSource as GlobalLightData
-}
