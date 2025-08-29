@@ -1,6 +1,7 @@
 export * from "@common/documents/_types.mjs";
 export { AmbientSoundEffect } from "@client/canvas/layers/sounds.mjs";
 export { RegionSocketEvent } from "./region.mjs";
+export { FolderChildNode } from "./folder.mjs";
 
 import { TokenConstrainMovementPathOptions, TokenMovementActionConfig } from "@client/_types.mjs";
 import { TerrainData } from "@client/data/terrain-data.mjs";
