@@ -16,6 +16,7 @@ import { CompendiumMetadata } from "./documents/collections/compendium-collectio
 import * as helpers from "./helpers/_module.mjs";
 import * as packages from "./packages/_module.mjs";
 import { Collection } from "./utils/_module.mjs";
+import { Documents} from "./helpers/hooks.mjs";
 
 /**
  * The core Game instance which encapsulates the data, settings, and states relevant for managing the game experience.
@@ -27,14 +28,14 @@ import { Collection } from "./utils/_module.mjs";
  * @param socket    The open web-socket which should be used to transact game-state data
  */
 export default class Game<
-    TActor extends Actor<null>,
-    TActors extends collections.Actors<TActor>,
-    TChatMessage extends ChatMessage,
-    TCombat extends Combat,
-    TItem extends Item<null>,
-    TMacro extends Macro,
-    TScene extends Scene,
-    TUser extends User,
+    TActor extends Actor<null> = Documents["Actor"],
+    TActors extends collections.Actors<TActor> = collections.Actors<TActor>,
+    TChatMessage extends ChatMessage = Documents["ChatMessage"],
+    TCombat extends Combat = Documents["Combat"],
+    TItem extends Item<null> = Documents["Item"],
+    TMacro extends Macro = Documents["Macro"],
+    TScene extends Scene = Documents["Scene"],
+    TUser extends User = Documents["User"],
 > {
     /**
      * The named view which is currently active.
@@ -178,9 +179,7 @@ export default class Game<
      * Fetch World data and return a Game instance
      * @return A Promise which resolves to the created Game instance
      */
-    static create(): Promise<
-        Game<Actor<null>, collections.Actors<Actor<null>>, ChatMessage, Combat, Item<null>, Macro, Scene, User>
-    >;
+    static create(): Promise<Game>;
 
     /** Request World data from server and return it */
     static getWorldData(socket: io.Socket): Promise<object>;
