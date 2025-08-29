@@ -1542,6 +1542,27 @@ export type ModelPropsFromSchema<TDataSchema extends abstract.DataSchema> = {
     [K in keyof TDataSchema]: ModelPropFromDataField<TDataSchema[K]>;
 };
 
+type DeepRequiredSchema<TDataSchema extends abstract.DataSchema> = {
+    [K in keyof TDataSchema as TDataSchema[K] extends DataField<JSONValue, any, true> ? K : never]: TDataSchema[K] extends SchemaField<infer TSubSchema, any, any, any, any, any>
+      ? DeepRequiredSchema<TSubSchema>
+      : ModelPropFromDataField<TDataSchema[K]>
+};
+
+type DeepOptionalSchema<TDataSchema extends abstract.DataSchema> = {
+    [K in keyof TDataSchema as TDataSchema[K] extends DataField<JSONValue> ? K : never]?: TDataSchema[K] extends SchemaField<infer TSubSchema, any, any, any, any, any>
+      ? DeepOptionalSchema<TSubSchema>
+      : ModelPropFromDataField<TDataSchema[K]>
+};
+
+export type DefaultSchemaField<
+    TDataSchema extends abstract.DataSchema = abstract.DataSchema,
+    TRequired extends boolean = true,
+    TNullable extends boolean = false,
+    THasInitial extends boolean = true,
+> = SchemaField<TDataSchema, SourceFromSchema<TDataSchema>, ModelPropsFromSchema<TDataSchema>, TRequired, TNullable, THasInitial>;
+
+export type ModelPropsFromSchemaWithOptional<TDataSchema extends abstract.DataSchema> = DeepRequiredSchema<TDataSchema> & DeepOptionalSchema<TDataSchema>;
+
 export type SourceFromSchema<TDataSchema extends abstract.DataSchema> = {
     [K in keyof TDataSchema]: SourceFromDataField<TDataSchema[K]>;
 };
