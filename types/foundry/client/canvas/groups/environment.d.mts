@@ -1,6 +1,7 @@
 import Color from "@common/utils/color.mjs";
 import CanvasGroupMixin from "./canvas-group-mixin.mjs";
-
+import { ColorSource } from "@client/client.mjs";
+import { SceneEnvironmentData } from "@common/documents/_types.mjs";
 /**
  * A container group which contains the primary canvas group and the effects canvas group.
  */
@@ -64,17 +65,15 @@ export default class EnvironmentCanvasGroup extends CanvasGroupMixin(PIXI.Contai
      * @param [config.environment]                  The scene environment data
      * @fires PIXI.FederatedEvent type: "darknessChange" - event: {environmentData: {darknessLevel, priorDarknessLevel}}
      */
-    initialize(config?: EnvironmentInitializeConfig): void;
+    initialize(config?: CanvasEnvironmentConfig): void;
 }
 
-type ColorSource = string | number | [number, number, number];
-
-interface EnvironmentInitializeConfig {
-    backgroundColor?: Maybe<ColorSource>;
-    brightestColor?: Maybe<ColorSource>;
-    darknessColor?: Maybe<ColorSource>;
-    daylightColor?: Maybe<ColorSource>;
-    fogExploredColor?: Maybe<ColorSource>;
-    fogUnexploredColor?: Maybe<ColorSource>;
-    environment?: DeepPartial<EnvironmentDataSource>;
+export interface CanvasEnvironmentConfig {
+    backgroundColor?: ColorSource;
+    brightestColor?: ColorSource;
+    darknessColor?: ColorSource;
+    daylightColor?: ColorSource;
+    environment?: DeepPartial<SceneEnvironmentData>;
+    fogExploredColor?: ColorSource;
+    fogUnexploredColor?: ColorSource;
 }
