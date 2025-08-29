@@ -1,3 +1,5 @@
+export { DocumentConstructionContext } from "../_types.mjs";
+
 import { DocumentUUID } from "@client/utils/helpers.mjs";
 import { DataField } from "@common/data/fields.mjs";
 import { DataModel, Document } from "./_module.mjs";
@@ -33,7 +35,7 @@ export interface DataModelValidationOptions {
     dropInvalidEmbedded?: boolean;
 }
 
-interface DataModelConstructionContext<TParent extends DataModel | null>
+export interface DataModelConstructionContext<TParent extends DataModel | null>
     extends Pick<DataModelValidationOptions, "strict" | "fallback" | "dropInvalidEmbedded"> {
     /** A parent DataModel instance to which this DataModel belongs */
     parent?: TParent;
