@@ -1,6 +1,7 @@
 import { ChatMessageCreateOperation } from "@common/documents/chat-message.mjs";
 import { BaseCard, CardFaceData, Cards, ChatMessage } from "./_module.mjs";
 import { ClientDocument } from "./abstract/client-document.mjs";
+import { ImageFilePath } from "@common/constants.mjs";
 
 declare const ClientBaseCard: new <TParent extends Cards | null>(
     ...args: any
@@ -18,7 +19,7 @@ export default class Card<TParent extends Cards | null = Cards> extends ClientBa
     get currentFace(): CardFaceData | null;
 
     /** The image of the currently displayed card face or back */
-    get img(): this["img"];
+    get img(): ImageFilePath;
 
     /** A reference to the source Cards document which defines this Card. */
     get source(): Cards | null;
