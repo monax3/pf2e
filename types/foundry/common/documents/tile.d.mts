@@ -63,6 +63,8 @@ type TileSchema = {
     roof: fields.BooleanField;
     /** The tile's occlusion settings */
     occlusion: fields.SchemaField<TileOcclusionSchema>;
+    /** The tile's restrictions settings */
+    restrictions: fields.DefaultSchemaField<TileRestrictionsSchema, false, false, false>;
     /** The tile's video settings */
     video: fields.SchemaField<TileVideoSchema>;
     /** An object of optional key/value flags */
@@ -78,6 +80,11 @@ type TileOcclusionSchema = {
     radius: fields.NumberField;
 };
 
+type TileRestrictionsSchema ={
+    light: fields.BooleanField<boolean, boolean, false, false, false>;
+    weather: fields.BooleanField<boolean, boolean, false, false, false>;
+}
+
 type TileVideoSchema = {
     /** Automatically loop the video? */
     loop: fields.BooleanField;
@@ -88,3 +95,8 @@ type TileVideoSchema = {
 };
 
 export type TileSource = fields.SourceFromSchema<TileSchema>;
+export type TileData = fields.ModelPropsFromSchemaWithOptional<TileSchema>;
+
+export type TileOcclusionData = fields.ModelPropsFromSchemaWithOptional<TileOcclusionSchema>;
+export type TileRestrictionsData = fields.ModelPropsFromSchemaWithOptional<TileRestrictionsSchema>;
+export type TileVideoData = fields.ModelPropsFromSchemaWithOptional<TileVideoSchema>;
