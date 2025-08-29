@@ -20,6 +20,7 @@ import {
     TokenDocument,
     User,
 } from "@client/documents/_module.mjs";
+import { CanvasEnvironmentConfig } from "@client/client.mjs";
 import { DocumentUUID } from "@client/utils/helpers.mjs";
 import { DatabaseCreateOperation, DatabaseDeleteOperation, DatabaseUpdateOperation } from "@common/abstract/_types.mjs";
 import Document from "@common/abstract/document.mjs";
@@ -485,16 +486,6 @@ declare global {
          */
         static call<K extends HookName>(hook: K, ...args: HookParams<K>): boolean;
     }
-}
-
-export interface CanvasEnvironmentConfig {
-    backgroundColor?: any;
-    brightestColor?: any;
-    darknessColor?: any;
-    daylightColor?: any;
-    environment?: any;
-    fogExploredColor?: any;
-    fogUnexploredColor?: any;
 }
 
 export interface DropCanvasData<T extends string = string, D extends object = object> {
