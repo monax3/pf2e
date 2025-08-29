@@ -4,7 +4,7 @@ import { RegionEvent } from "@client/documents/region.mjs";
 import TokenDocument from "@client/documents/token.mjs";
 import { DataSchema } from "@common/abstract/_types.mjs";
 import TypeDataModel from "@common/abstract/type-data.mjs";
-import { REGION_EVENTS } from "@common/constants.mjs";
+import { RegionEventType } from "@common/constants.mjs";
 import * as fields from "@common/data/fields.mjs";
 
 /**
@@ -68,7 +68,5 @@ type EventBehaviorStaticHandler = <TBehaviorType extends RegionBehaviorType>(
     this: TBehaviorType,
     event: RegionEvent,
 ) => Promise<void>;
-
-type RegionEventType = (typeof REGION_EVENTS)[keyof typeof REGION_EVENTS];
 
 export type EventsField = fields.SetField<fields.StringField<RegionEventType, RegionEventType, true, false, false>>;
