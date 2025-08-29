@@ -3,6 +3,7 @@ import DataModel from "@common/abstract/data.mjs";
 import * as fields from "../../../common/data/fields.mjs";
 import { PlaceableObject, Token } from "../placeables/_module.mjs";
 import PointVisionSource from "../sources/point-vision-source.mjs";
+import { TokenDetectionMode } from "@common/documents/token.mjs";
 
 /**
  * A Detection Mode which can be associated with any kind of sense/vision/perception.
@@ -124,17 +125,6 @@ export default class DetectionMode extends DataModel<null, DetectionModeSchema> 
 export default interface DetectionMode
     extends DataModel<null, DetectionModeSchema>,
         fields.ModelPropsFromSchema<DetectionModeSchema> {}
-
-export interface TokenDetectionMode {
-    /** The id of the detection mode, a key from CONFIG.Canvas.detectionModes */
-    id: string;
-    /** Whether or not this detection mode is presently enabled */
-    enabled: boolean;
-    /** The maximum range in distance units at which this mode can detect targets.
-     *  If null, the detection range is unlimited.
-     */
-    range: number | null;
-}
 
 export type DetectionType = (typeof DetectionMode.DETECTION_TYPES)[keyof typeof DetectionMode.DETECTION_TYPES];
 
