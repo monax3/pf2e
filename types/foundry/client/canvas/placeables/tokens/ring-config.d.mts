@@ -1,4 +1,4 @@
-import { PrimaryBaseSamplerShader } from "@client/canvas/rendering/shaders/_module.mjs";
+import TokenRingSamplerShader from "@client/canvas/rendering/shaders/samplers/primary/token-ring.mjs";
 import { DynamicRingData, TokenRing } from "./_module.mjs";
 
 /**
@@ -142,7 +142,7 @@ export default class TokenRingConfig {
      * Get the current shader class.
      * @returns The current shader class.
      */
-    get shaderClass(): typeof PrimaryBaseSamplerShader;
+    get shaderClass(): typeof TokenRingSamplerShader;
 
     set shaderClass(value);
 
