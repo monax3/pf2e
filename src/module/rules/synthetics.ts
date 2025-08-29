@@ -13,7 +13,7 @@ import type { MovementType } from "@actor/types.ts";
 import type { TokenAnimationOptions } from "@client/_module.d.mts";
 import type { TokenDocumentUUID } from "@client/documents/_module.d.mts";
 import type { ImageFilePath, VideoFilePath } from "@common/constants.d.mts";
-import type { TokenSource } from "@common/documents/token.d.mts";
+import type { TokenData, TokenRingData } from "@common/documents/token.d.mts";
 import type { ItemPF2e, MeleePF2e, WeaponPF2e } from "@item";
 import type { AbilityTrait } from "@item/ability/index.ts";
 import type { ConditionSource, EffectSource } from "@item/base/data/index.ts";
@@ -61,16 +61,12 @@ interface RuleElementSynthetics {
     toggles: Record<string, Record<string, RollOptionToggle>>;
     tokenEffectIcons: ActiveEffectPF2e<ItemPF2e>[];
     tokenMarks: Map<TokenDocumentUUID, string[]>;
-    tokenOverrides: DeepPartial<Pick<TokenSource, "light" | "name">> & {
+    tokenOverrides: DeepPartial<Pick<TokenData, "light" | "name">> & {
         alpha?: number | null;
         texture?:
             | { src: ImageFilePath | VideoFilePath; tint?: Color | null }
             | { src: ImageFilePath | VideoFilePath; tint?: Color | null; scaleX: number; scaleY: number };
-        ring?: {
-            subject: TokenDocument["ring"]["subject"];
-            colors: TokenDocument["ring"]["colors"];
-            effects: TokenDocument["ring"]["effects"];
-        };
+        ring?: TokenRingData;
         animation?: TokenAnimationOptions;
     };
     weaponPotency: Record<string, PotencySynthetic[]>;
