@@ -63,6 +63,7 @@ export default class Cards extends ClientDocumentMixin(BaseCards) {
 
 export default interface Cards {
     readonly _source: CardsSource;
+    readonly cards: foundry.abstract.EmbeddedCollection<Card<this>>;
 
     get sheet(): DocumentSheetV2;
 }
