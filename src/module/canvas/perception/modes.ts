@@ -1,5 +1,5 @@
 import type { CanvasVisibilityTest } from "@client/_types.d.mts";
-import type { TokenDetectionMode } from "@client/canvas/perception/detection-mode.d.mts";
+import type { TokenDetectionMode } from "@common/documents/_types.mjs";
 import { TokenPF2e } from "../token/object.ts";
 import type { PointVisionSourcePF2e } from "./point-vision-source.ts";
 

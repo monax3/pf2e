@@ -89,6 +89,30 @@ interface TokenMetadata extends DocumentMetadata {
     };
 }
 
+type TokenBarSchema = {
+    /** The attribute path within the Token's Actor data which should be displayed */
+    attribute: fields.StringField<string, string, true, true, true>;
+}
+
+export type TokenBarData = fields.ModelPropsFromSchemaWithOptional<TokenBarSchema>;
+
+type TokenDetectionSchema = {
+    /** The id of the detection mode, a key from CONFIG.Canvas.detectionModes */
+    id: fields.StringField;
+    /** Whether or not this detection mode is presently enabled */
+    enabled: fields.BooleanField;
+    /** The maximum range in distance units at which this mode can detect targets */
+    range: fields.NumberField<number, number, true, true, true>;
+}
+
+export type TokenDetectionMode = fields.ModelPropsFromSchema<TokenDetectionSchema>;
+
+type TokenOcclusionSchema = {
+    radius: fields.NumberField<number, number, false, false>;
+}
+
+export type TokenOcclusionData = fields.ModelPropsFromSchema<TokenOcclusionSchema>;
+
 type TokenRingSchema = {
     enabled: fields.BooleanField<boolean, boolean, false, false, false>;
     colors: fields.DefaultSchemaField<{
@@ -103,6 +127,29 @@ type TokenRingSchema = {
 };
 
 export type TokenRingData = fields.ModelPropsFromSchemaWithOptional<TokenRingSchema>;
+
+type TokenSightSchema = {
+    /** Should vision computation and rendering be active for this Token? */
+    enabled: fields.BooleanField;
+    /** How far in distance units the Token can see without the aid of a light source */
+    range: fields.NumberField<number, number, true, true, true>;
+    /** An angle at which the Token can see relative to their direction of facing */
+    angle: fields.AngleField;
+    /** The vision mode which is used to render the appearance of the visible area */
+    visionMode: fields.StringField<string, string, true, false, true>;
+    /** A special color which applies a hue to the visible area */
+    color: fields.ColorField;
+    /** A degree of attenuation which gradually fades the edges of the visible area */
+    attenuation: fields.AlphaField;
+    /** An advanced customization for the perceived brightness of the visible area */
+    brightness: fields.NumberField<number, number, true, false>;
+    /** An advanced customization of color saturation within the visible area */
+    saturation: fields.NumberField<number, number, true, false>;
+    /** An advanced customization for contrast within the visible area */
+    contrast: fields.NumberField<number, number, true, false>;
+}
+
+export type TokenSightData = fields.ModelPropsFromSchemaWithOptional<TokenSightSchema>;
 
 type TokenSchema = {
     /** The Token _id which uniquely identifies it within its parent Scene */
@@ -154,52 +201,16 @@ type TokenSchema = {
     /** The display mode of Token resource bars, from CONST.TOKEN_DISPLAY_MODES */
     displayBars: fields.NumberField<TokenDisplayMode, TokenDisplayMode, true>;
     /** The configuration of the Token's primary resource bar */
-    bar1: fields.SchemaField<{
-        /** The attribute path within the Token's Actor data which should be displayed */
-        attribute: fields.StringField<string, string, true, true, true>;
-    }>;
+    bar1: fields.SchemaField<TokenBarSchema>;
     /** The configuration of the Token's secondary resource bar */
-    bar2: fields.SchemaField<{
-        /** The attribute path within the Token's Actor data which should be displayed */
-        attribute: fields.StringField<string, string, true, true, true>;
-    }>;
+    bar2: fields.SchemaField<TokenBarSchema>;
     /** Configuration of the light source that this Token emits */
     light: fields.EmbeddedDataField<data.LightData<BaseToken>>;
     /** Configuration of sight and vision properties for the Token */
-    sight: fields.SchemaField<{
-        /** Should vision computation and rendering be active for this Token? */
-        enabled: fields.BooleanField;
-        /** How far in distance units the Token can see without the aid of a light source */
-        range: fields.NumberField<number, number, true, true, true>;
-        /** An angle at which the Token can see relative to their direction of facing */
-        angle: fields.AngleField;
-        /** The vision mode which is used to render the appearance of the visible area */
-        visionMode: fields.StringField<string, string, true, false, true>;
-        /** A special color which applies a hue to the visible area */
-        color: fields.ColorField;
-        /** A degree of attenuation which gradually fades the edges of the visible area */
-        attenuation: fields.AlphaField;
-        /** An advanced customization for the perceived brightness of the visible area */
-        brightness: fields.NumberField<number, number, true, false>;
-        /** An advanced customization of color saturation within the visible area */
-        saturation: fields.NumberField<number, number, true, false>;
-        /** An advanced customization for contrast within the visible area */
-        contrast: fields.NumberField<number, number, true, false>;
-    }>;
+    sight: fields.SchemaField<TokenSightSchema>;
     /** An array of detection modes which are available to this Token */
-    detectionModes: fields.ArrayField<
-        fields.SchemaField<{
-            /** The id of the detection mode, a key from CONFIG.Canvas.detectionModes */
-            id: fields.StringField<string>;
-            /** Whether or not this detection mode is presently enabled */
-            enabled: fields.BooleanField;
-            /** The maximum range in distance units at which this mode can detect targets */
-            range: fields.NumberField<number, number, true, true, true>;
-        }>
-    >;
-    occludable: fields.SchemaField<{
-        radius: fields.NumberField<number, number, false, false>;
-    }>;
+    detectionModes: fields.ArrayField<fields.SchemaField<TokenDetectionSchema>>;
+    occludable: fields.SchemaField<TokenOcclusionSchema>;
     ring: fields.SchemaField<TokenRingSchema>;
     /** An object of optional key/value flags */
     flags: fields.DocumentFlagsField;

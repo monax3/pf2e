@@ -1,5 +1,4 @@
 export * from "@common/documents/_types.mjs";
-export { TokenDetectionMode } from "@client/canvas/perception/detection-mode.mjs";
 export { AmbientSoundEffect } from "@client/canvas/layers/sounds.mjs";
 export { RegionSocketEvent } from "./region.mjs";
 
