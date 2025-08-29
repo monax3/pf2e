@@ -4,7 +4,7 @@ import {
     DatabaseDeleteCallbackOptions,
 } from "@common/abstract/_types.mjs";
 import Document from "@common/abstract/document.mjs";
-import { Actor, BaseFolder, BaseUser, Item, JournalEntry, Macro, RollTable, Scene } from "./_module.mjs";
+import { Actor, BaseFolder, BaseUser, Item, JournalEntry, Macro, Playlist, RollTable, Scene, WorldDocument, CompendiumDocument, type Cards } from "./_module.mjs";
 import { ClientDocument, ClientDocumentStatic } from "./abstract/client-document.mjs";
 import WorldCollection from "./abstract/world-collection.mjs";
 import CompendiumCollection from "./collections/compendium-collection.mjs";
@@ -24,7 +24,7 @@ interface ClientBaseFolder extends InstanceType<typeof ClientBaseFolder> {}
  * @see {@link Folders}                     The world-level collection of Folder documents
  * @see {@link FolderConfig}                The Folder configuration application
  */
-export default class Folder<TDocument extends EnfolderableDocument = EnfolderableDocument> extends ClientBaseFolder {
+export default class Folder<TDocument extends EnfolderableDocument | CompendiumCollection = EnfolderableDocument | CompendiumCollection> extends ClientBaseFolder {
     /** The depth of this folder in its sidebar tree */
     depth: number;
 
@@ -33,7 +33,7 @@ export default class Folder<TDocument extends EnfolderableDocument = Enfolderabl
      * {@link Folder.getSubfolders} because reports the subset of child folders which  are displayed to the current User
      * in the UI.
      */
-    children: Folder<TDocument>[];
+    children: FolderChildNode<TDocument>[];
 
     /** Return whether the folder is displayed in the sidebar to the current User. */
     displayed: boolean;
@@ -52,10 +52,10 @@ export default class Folder<TDocument extends EnfolderableDocument = Enfolderabl
     set contents(value: TDocument[]);
 
     /** Return a reference to the Document type which is contained within this Folder. */
-    get documentClass(): ConstructorOf<TDocument>;
+    get documentClass(): TDocument extends Document ? ConstructorOf<TDocument> : never;
 
     /** Return a reference to the WorldCollection instance which provides Documents to this Folder. */
-    get documentCollection(): WorldCollection<TDocument>;
+    get documentCollection(): TDocument extends EnfolderableDocument ? WorldCollection<EnfolderableDocument> : never;
 
     /** Return whether the folder is currently expanded within the sidebar interface. */
     get expanded(): boolean;
@@ -102,9 +102,9 @@ export default class Folder<TDocument extends EnfolderableDocument = Enfolderabl
      * @return The updated Compendium Collection instance
      */
     exportToCompendium(
-        pack: CompendiumCollection<TDocument>,
+        pack: TDocument extends CompendiumDocument ? CompendiumCollection<TDocument> : never,
         { updateByName }?: { updateByName?: boolean },
-    ): Promise<CompendiumCollection<TDocument>>;
+    ): Promise<TDocument extends CompendiumDocument ? CompendiumCollection<TDocument> : never>;
 
     /**
      * Provide a dialog form that allows for exporting the contents of a Folder into an eligible Compendium pack.
@@ -130,6 +130,25 @@ export default class Folder<TDocument extends EnfolderableDocument = Enfolderabl
     getParentFolders(): Folder<TDocument>[];
 }
 
-export type EnfolderableDocument = Actor<null> | Item<null> | Macro | Scene | JournalEntry | RollTable | Playlist;
+export interface FolderChildNode<TDocument extends EnfolderableDocument | CompendiumCollection = EnfolderableDocument> {
+    children: FolderChildNode<TDocument>[];
+    depth: number;
+    entries:
+        | TDocument[]
+        | CompendiumCollection<TDocument extends CompendiumDocument ? TDocument : CompendiumDocument>[];
+    folder: Folder<TDocument>;
+    root: boolean;
+    visible: boolean;
+}
+
+export type EnfolderableDocument =
+    | Actor<null>
+    | Cards
+    | Item<null>
+    | JournalEntry
+    | Macro
+    | Playlist
+    | RollTable
+    | Scene;
 
 export {};

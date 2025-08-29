@@ -13,6 +13,7 @@ export * as collections from "./collections/_module.mjs";
 
 export { default as Setting } from "./setting.mjs";
 
+import type { Documents } from "@client/helpers/hooks.mjs";
 import { default as Actor } from "./actor.mjs";
 import Adventure from "./adventure.mjs";
 import { default as Cards } from "./cards.mjs";
@@ -72,7 +73,6 @@ export type WorldDocument =
     | Cards
     | ChatMessage
     | Combat
-    | Folder
     | FogExploration
     | Item<null>
     | JournalEntry
@@ -80,7 +80,7 @@ export type WorldDocument =
     | Playlist
     | RollTable
     | Scene
-    | User;
+    | User
 
 export type CompendiumDocument =
     | Actor<null>
@@ -91,4 +91,4 @@ export type CompendiumDocument =
     | Macro
     | Playlist
     | RollTable
-    | Scene;
+    | Scene
