@@ -46,3 +46,4 @@ type JournalEntryCategorySchema<
 };
 
 export type JournalEntryCategorySource = fields.SourceFromSchema<JournalEntryCategorySchema>;
+export type JournalEntryCategoryData = fields.ModelPropsFromSchemaWithOptional<JournalEntryCategorySchema>
