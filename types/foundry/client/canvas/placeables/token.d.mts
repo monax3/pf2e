@@ -123,7 +123,7 @@ export default class Token<TDocument extends TokenDocument = TokenDocument> exte
      * todo: Replace with correct type
      * @type {foundry.canvas.tokens.TokenRing|null}
      */
-    get ring(): object;
+    get ring(): foundry.canvas.placeables.tokens.TokenRing | null;
 
     /** A convenience boolean to test whether the Token is using a dynamic ring. */
     get hasDynamicRing(): boolean;
