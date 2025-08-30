@@ -192,6 +192,7 @@ interface AttributeBoostsSource {
 
 interface CharacterResourcesSource {
     heroPoints: ValueAndMax;
+    mythicPoints: ValueAndMax;
     focus?: { value: number; max?: never };
     crafting?: { infusedReagents?: { value: number } };
     /** Used in the variant stamina rules; a resource expended to regain stamina/hp. */
